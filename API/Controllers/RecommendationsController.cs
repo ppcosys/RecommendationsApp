@@ -31,7 +31,7 @@ namespace API.Controllers
         [HttpGet("{id}")] //api/recommendations/guid
         public async Task<ActionResult<Recommendation>> GetRecommendation(Guid id)
         {
-            return Ok();
+            return await Mediator.Send(new Details.Query{Id = id});
         }
         
     }
