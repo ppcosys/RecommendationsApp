@@ -33,6 +33,13 @@ namespace API.Controllers
         {
             return await Mediator.Send(new Details.Query{Id = id});
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRecommendation(Recommendation recommendation)
+        {
+            await Mediator.Send(new Create.Command {Recommendation =recommendation});
+            return Ok();
+        }
         
     }
 }
