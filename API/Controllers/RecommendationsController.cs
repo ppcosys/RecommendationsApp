@@ -41,5 +41,14 @@ namespace API.Controllers
             return Ok();
         }
         
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(Guid id, Recommendation recommendation)
+        {
+            recommendation.Id = id;
+
+            await Mediator.Send(new Edit.Command { Recommendation = recommendation });
+
+            return Ok();
+        }
     }
 }
