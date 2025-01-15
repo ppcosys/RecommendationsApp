@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Persistence;
@@ -18,8 +19,10 @@ namespace Application.Recommendations
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IMapper mapper)
             {
+                _mapper = mapper;
                 _context = context;
                 
             }
@@ -28,7 +31,7 @@ namespace Application.Recommendations
             {
                 var recommendation = await _context.Recommendations.FindAsync(request.Recommendation.Id);
 
-                recommendation.Title = request.Recommendation.Title ?? recommendation.Title;
+                _mapper.Map(request.Recommendation, recommendation);
 
                 await _context.SaveChangesAsync();
             }
