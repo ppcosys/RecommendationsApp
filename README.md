@@ -7,3 +7,9 @@ Technologies used:
 - TypeScript
 - ASP.NET API
 - .NET 8.0
+- MediatR
+
+Design patterns:
+- Clean Architecture
+- CQRS
+- Mediator pattern
