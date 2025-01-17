@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import axios from 'axios'
 import { Header, List } from 'semantic-ui-react';
+import { Recommendation } from '../models/recommendation';
 
 function App() {
-  const [recommendations, setRecommendations] = useState([]);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/recommendations')
+    axios.get<Recommendation[]>('http://localhost:5000/api/recommendations')
       .then(response => {
         setRecommendations(response.data)
       })
@@ -17,7 +17,7 @@ function App() {
     <div>
       <Header as='h2' icon='users' content='Reactivities'/>
       <List>
-        {recommendations.map((recommendation: any) => (
+        {recommendations.map(recommendation => (
           <List.Item key={recommendation.id}>
             {recommendation.title}
           </List.Item>
