@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import axios from 'axios'
-import { Header, List } from 'semantic-ui-react';
+import { Container, Header, List } from 'semantic-ui-react';
 import { Recommendation } from '../models/recommendation';
+import NavBar from './NavBar';
 
 function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -14,16 +15,18 @@ function App() {
   }, []) 
   
   return (
-    <div>
-      <Header as='h2' icon='users' content='Reactivities'/>
-      <List>
-        {recommendations.map(recommendation => (
-          <List.Item key={recommendation.id}>
-            {recommendation.title}
-          </List.Item>
-        ))}
-      </List>
-    </div>
+    <>
+      <NavBar />
+      <Container style={{marginTop: '7em'}}>
+        <List>
+          {recommendations.map(recommendation => (
+            <List.Item key={recommendation.id}>
+              {recommendation.title}
+            </List.Item>
+          ))}
+        </List>
+      </Container>
+    </>
   )
 }
 
