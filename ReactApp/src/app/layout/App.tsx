@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Container, Header, List } from 'semantic-ui-react';
 import { Recommendation } from '../models/recommendation';
 import NavBar from './NavBar';
+import RecommendationDashboars from '../../features/recommendations/dashboard/RecommendationDashboard';
 
 function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -18,13 +19,7 @@ function App() {
     <>
       <NavBar />
       <Container style={{marginTop: '7em'}}>
-        <List>
-          {recommendations.map(recommendation => (
-            <List.Item key={recommendation.id}>
-              {recommendation.title}
-            </List.Item>
-          ))}
-        </List>
+        <RecommendationDashboars recommendations={recommendations} />
       </Container>
     </>
   )
