@@ -1,22 +1,17 @@
 import React from 'react'
 import { Grid, List } from 'semantic-ui-react'
 import { Recommendation } from '../../../app/models/recommendation';
+import RecommendationList from './RecommendationList'
 
-interface Props {
+interface Props {   
     recommendations: Recommendation[];
 }
 
-export default function RecommendationDashboars({recommendations}: Props){
+export default function RecommendationDashboard({recommendations}: Props){
     return(
         <Grid>
             <Grid.Column width='10'>
-                <List>
-                    {recommendations.map(recommendation => (
-                        <List.Item key={recommendation.id}>
-                        {recommendation.title}
-                        </List.Item>
-                    ))}
-                </List>
+                <RecommendationList recommendations = {recommendations}/>
             </Grid.Column>
         </Grid>
     )
