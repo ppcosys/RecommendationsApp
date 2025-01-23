@@ -3,10 +3,11 @@ import { Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, Ca
 import { Recommendation } from '../../../app/models/recommendation';
 
 interface Props{
-    recommendation: Recommendation
+    recommendation: Recommendation;
+    cancelSelectRecommendation: () => void;
 }
 
-export default function RecommendationDetails({recommendation} : Props) {
+export default function RecommendationDetails({recommendation, cancelSelectRecommendation} : Props) {
     return(
         <Card fluid>
             <Image src={`/assets/categoryImages/${recommendation.category}.jpg`}/>
@@ -22,7 +23,7 @@ export default function RecommendationDetails({recommendation} : Props) {
             <CardContent extra>
                 <ButtonGroup widths='2'>
                     <Button basic color='blue' content='Edit' />
-                    <Button basic color='grey' content='Cancel' />
+                    <Button onClick={cancelSelectRecommendation} basic color='grey' content='Cancel' />
                 </ButtonGroup>
             </CardContent>
         </Card>

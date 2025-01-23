@@ -7,17 +7,21 @@ import RecommendationForm from '../form/RecommendationForm';
 
 interface Props {   
     recommendations: Recommendation[];
+    selectedRecommendation: Recommendation | undefined;
+    selectRecommendation: (id: string) => void;
+    cancelSelectRecommendation: () => void;
 }
 
-export default function RecommendationDashboard({recommendations}: Props){
+export default function RecommendationDashboard({recommendations, selectedRecommendation, 
+    selectRecommendation, cancelSelectRecommendation}: Props){
     return(
         <Grid>
             <Grid.Column width='10'>
-                <RecommendationList recommendations = {recommendations}/>
+                <RecommendationList recommendations = {recommendations} selectRecommendation={selectRecommendation} />
             </Grid.Column>
             <GridColumn width='6'>
-                {recommendations[0] && 
-                <RecommendationDetails recommendation={recommendations[0]} />}
+                {selectedRecommendation && 
+                <RecommendationDetails recommendation={selectedRecommendation} cancelSelectRecommendation = {cancelSelectRecommendation}/>}
                 <RecommendationForm />
             </GridColumn>
         </Grid>
