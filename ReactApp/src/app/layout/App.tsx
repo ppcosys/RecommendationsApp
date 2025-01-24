@@ -8,6 +8,7 @@ import RecommendationDashboard from '../../features/recommendations/dashboard/Re
 function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | undefined>(undefined);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios.get<Recommendation[]>('http://localhost:5000/api/recommendations')
@@ -23,16 +24,28 @@ function App() {
   function handleCancelSelectRecommendation() {
     setSelectedRecommendation(undefined);
   }
+
+  function handleFormOpen(id?: string){
+    id ? handleSelectRecommendation(id) : handleCancelSelectRecommendation();
+    setEditMode(true);
+  }
   
+  function handleFormClose() {
+    setEditMode(false);
+  }
+
   return (
     <>
-      <NavBar />
+      <NavBar openForm={handleFormOpen}/>
       <Container style={{marginTop: '7em'}}>
         <RecommendationDashboard 
           recommendations={recommendations}
           selectedRecommendation={selectedRecommendation}
           selectRecommendation={handleSelectRecommendation}
           cancelSelectRecommendation={handleCancelSelectRecommendation}
+          editMode={editMode}
+          openForm={handleFormOpen}
+          closeForm={handleFormClose}
         />
       </Container>
     </>

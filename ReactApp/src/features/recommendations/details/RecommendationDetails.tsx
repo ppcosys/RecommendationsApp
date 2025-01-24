@@ -5,9 +5,10 @@ import { Recommendation } from '../../../app/models/recommendation';
 interface Props{
     recommendation: Recommendation;
     cancelSelectRecommendation: () => void;
+    openForm: (id: string) => void;
 }
 
-export default function RecommendationDetails({recommendation, cancelSelectRecommendation} : Props) {
+export default function RecommendationDetails({recommendation, cancelSelectRecommendation, openForm} : Props) {
     return(
         <Card fluid>
             <Image src={`/assets/categoryImages/${recommendation.category}.jpg`}/>
@@ -22,7 +23,7 @@ export default function RecommendationDetails({recommendation, cancelSelectRecom
             </CardContent>
             <CardContent extra>
                 <ButtonGroup widths='2'>
-                    <Button basic color='blue' content='Edit' />
+                    <Button onClick={() => openForm(recommendation.id)} basic color='blue' content='Edit' />
                     <Button onClick={cancelSelectRecommendation} basic color='grey' content='Cancel' />
                 </ButtonGroup>
             </CardContent>

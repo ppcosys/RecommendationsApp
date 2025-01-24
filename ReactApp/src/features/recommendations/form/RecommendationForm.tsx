@@ -1,8 +1,14 @@
 import React from "react";
 import { Button, Form, FormInput, FormTextArea, Segment } from "semantic-ui-react";
+import { Recommendation } from "../../../app/models/recommendation";
+
+interface Props {
+    recommendation: Recommendation | undefined;
+    closeForm: () => void;
+}
 
 
-export default function RecommendationForm(){
+export default function RecommendationForm({recommendation, closeForm}: Props){
     return (
         <Segment clearing>
             <Form>
@@ -15,7 +21,7 @@ export default function RecommendationForm(){
                 <FormInput placeholder='City' />
                 <FormInput placeholder='Place' />
                 <Button floated='right' positive type='submit' content='Submit' />
-                <Button floated='right' positive type='submit' content='Cancel' />
+                <Button onClick={closeForm} floated='right' type='submit' content='Cancel' />
             </Form>
         </Segment>
     )
