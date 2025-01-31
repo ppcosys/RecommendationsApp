@@ -5,10 +5,11 @@ import { Recommendation } from "../../../app/models/recommendation";
 interface Props {
     recommendation: Recommendation | undefined;
     closeForm: () => void;
+    createOrEdit: (recommendation: Recommendation) => void;
 }
 
 
-export default function RecommendationForm({recommendation: selectedRecommendation, closeForm}: Props){
+export default function RecommendationForm({recommendation: selectedRecommendation, closeForm, createOrEdit}: Props){
     
     const initialState = selectedRecommendation ?? {
         id: '',
@@ -25,7 +26,7 @@ export default function RecommendationForm({recommendation: selectedRecommendati
     const [recommendation, setRecommendation] = useState(initialState);
 
     function handleSubmit(){
-        console.log(recommendation);
+        createOrEdit(recommendation);
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {

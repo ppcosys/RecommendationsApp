@@ -13,10 +13,11 @@ interface Props {
     editMode: boolean;
     openForm: (id: string) => void;
     closeForm: () => void;
+    createOrEdit: (recommendation: Recommendation) => void;
 }
 
 export default function RecommendationDashboard({recommendations, selectedRecommendation, 
-    selectRecommendation, cancelSelectRecommendation, editMode, openForm, closeForm}: Props){
+    selectRecommendation, cancelSelectRecommendation, editMode, openForm, closeForm, createOrEdit}: Props){
     return(
         <Grid>
             <Grid.Column width='10'>
@@ -30,7 +31,7 @@ export default function RecommendationDashboard({recommendations, selectedRecomm
                     openForm={openForm}
                 />}
                 {editMode &&
-                <RecommendationForm closeForm={closeForm} recommendation={selectedRecommendation} />}
+                <RecommendationForm closeForm={closeForm} recommendation={selectedRecommendation} createOrEdit={createOrEdit}/>}
             </GridColumn>
         </Grid>
     )

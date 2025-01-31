@@ -34,6 +34,14 @@ function App() {
     setEditMode(false);
   }
 
+  function handleCreateOrEditRecommendation(recomendation: Recommendation){
+    recomendation.id 
+      ? setRecommendations([...recommendations.filter(x => x.id !== recomendation.id), recomendation])
+      : setRecommendations([...recommendations, recomendation]);
+    setEditMode(false);
+    setSelectedRecommendation(recomendation);
+  }
+
   return (
     <>
       <NavBar openForm={handleFormOpen}/>
@@ -46,6 +54,7 @@ function App() {
           editMode={editMode}
           openForm={handleFormOpen}
           closeForm={handleFormClose}
+          createOrEdit={handleCreateOrEditRecommendation}
         />
       </Container>
     </>
