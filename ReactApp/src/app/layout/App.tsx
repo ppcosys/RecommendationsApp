@@ -1,9 +1,10 @@
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Container, Header, List } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Recommendation } from '../models/recommendation';
 import NavBar from './NavBar';
 import RecommendationDashboard from '../../features/recommendations/dashboard/RecommendationDashboard';
+import {v4 as uuid} from 'uuid';
 
 function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -34,12 +35,12 @@ function App() {
     setEditMode(false);
   }
 
-  function handleCreateOrEditRecommendation(recomendation: Recommendation){
-    recomendation.id 
-      ? setRecommendations([...recommendations.filter(x => x.id !== recomendation.id), recomendation])
-      : setRecommendations([...recommendations, recomendation]);
+  function handleCreateOrEditRecommendation(recommendation: Recommendation){
+    recommendation.id 
+      ? setRecommendations([...recommendations.filter(x => x.id !== recommendation.id), recommendation])
+      : setRecommendations([...recommendations, recommendation, {...recommendation, id: uuid()}]);
     setEditMode(false);
-    setSelectedRecommendation(recomendation);
+    setSelectedRecommendation(recommendation);
   }
 
   return (

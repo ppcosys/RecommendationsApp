@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, GridColumn, List } from 'semantic-ui-react';
+import { Grid, GridColumn } from 'semantic-ui-react';
 import { Recommendation } from '../../../app/models/recommendation';
 import RecommendationList from './RecommendationList'
 import RecommendationDetails from '../details/RecommendationDetails';
