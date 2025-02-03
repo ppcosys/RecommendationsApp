@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { Container } from 'semantic-ui-react';
 import { Recommendation } from '../models/recommendation';
 import NavBar from './NavBar';
 import RecommendationDashboard from '../../features/recommendations/dashboard/RecommendationDashboard';
 import {v4 as uuid} from 'uuid';
+import agent from '../api/agent';
 
 function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -12,9 +12,9 @@ function App() {
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    axios.get<Recommendation[]>('http://localhost:5000/api/recommendations')
+    agent.Recommendations.list()
       .then(response => {
-        setRecommendations(response.data)
+        setRecommendations(response);
       })
   }, [])
 
