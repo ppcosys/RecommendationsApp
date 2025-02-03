@@ -5,9 +5,10 @@ import { Button, Item, Label, Segment } from 'semantic-ui-react';
 interface Props {
     recommendations: Recommendation[];
     selectRecommendation: (id: string) => void;
+    deleteRecommendation: (id: string) => void;
 }
 
-export default function RecommendationList({recommendations, selectRecommendation }: Props) {
+export default function RecommendationList({recommendations, selectRecommendation, deleteRecommendation }: Props) {
     return (
         <Segment>
             <Item.Group divided>
@@ -22,6 +23,7 @@ export default function RecommendationList({recommendations, selectRecommendatio
                             </Item.Description>
                             <Item.Extra>
                                 <Button onClick={() => selectRecommendation(recommendation.id)} floated='right' content='View' color='blue' />
+                                <Button onClick={() => deleteRecommendation(recommendation.id)} floated='right' content='Delete' color='red' />
                                 <Label basic content={recommendation.category} />
                             </Item.Extra>
                         </Item.Content>

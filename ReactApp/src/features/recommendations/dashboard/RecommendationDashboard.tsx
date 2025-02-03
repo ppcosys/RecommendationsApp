@@ -14,14 +14,18 @@ interface Props {
     openForm: (id: string) => void;
     closeForm: () => void;
     createOrEdit: (recommendation: Recommendation) => void;
+    deleteRecommendation: (id: string) => void;
 }
 
-export default function RecommendationDashboard({recommendations, selectedRecommendation, 
+export default function RecommendationDashboard({recommendations, selectedRecommendation, deleteRecommendation,
     selectRecommendation, cancelSelectRecommendation, editMode, openForm, closeForm, createOrEdit}: Props){
     return(
         <Grid>
             <Grid.Column width='10'>
-                <RecommendationList recommendations = {recommendations} selectRecommendation={selectRecommendation} />
+                <RecommendationList recommendations = {recommendations} 
+                    selectRecommendation={selectRecommendation}
+                    deleteRecommendation={deleteRecommendation}
+                />
             </Grid.Column>
             <GridColumn width='6'>
                 {selectedRecommendation && !editMode &&

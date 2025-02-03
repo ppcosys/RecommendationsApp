@@ -43,6 +43,10 @@ function App() {
     setSelectedRecommendation(recommendation);
   }
 
+  function handleDeleteRecommendation(id: string){
+    setRecommendations([...recommendations.filter(x => x.id !== id)])
+  }
+
   return (
     <>
       <NavBar openForm={handleFormOpen}/>
@@ -56,6 +60,7 @@ function App() {
           openForm={handleFormOpen}
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditRecommendation}
+          deleteRecommendation={handleDeleteRecommendation}
         />
       </Container>
     </>
