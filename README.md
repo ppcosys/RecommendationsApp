@@ -8,6 +8,7 @@ Technologies used:
 - ASP.NET API
 - .NET 8.0
 - MediatR
+- Axios
 
 Design patterns:
 - Clean Architecture
