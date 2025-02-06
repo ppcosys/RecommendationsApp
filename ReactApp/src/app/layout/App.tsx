@@ -12,9 +12,13 @@ function App() {
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    agent.Recommendations.list()
-      .then(response => {
-        setRecommendations(response);
+    agent.Recommendations.list().then(response => {
+      let recommendations: Recommendation[] = [];  
+      response.forEach(recommendation => {
+        recommendation.date = recommendation.date.split('T')[0];
+        recommendations.push(recommendation);
+      })
+      setRecommendations(response);
       })
   }, [])
 

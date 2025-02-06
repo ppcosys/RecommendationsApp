@@ -40,7 +40,7 @@ export default function RecommendationForm({recommendation: selectedRecommendati
                 <FormInput placeholder='Title' value={recommendation.title} name='title'onChange={handleInputChange} />
                 <FormInput placeholder='Category' value={recommendation.category} name='category'onChange={handleInputChange} />
                 <FormInput placeholder='Link' value={recommendation.link} name='link'onChange={handleInputChange} />
-                <FormInput placeholder='Date' value={recommendation.date} name='date'onChange={handleInputChange} />
+                <FormInput type='date' placeholder='Date' value={recommendation.date} name='date'onChange={handleInputChange} />
                 <FormTextArea placeholder='Description' value={recommendation.description} name='description'onChange={handleInputChange} />
                 <FormInput placeholder='Country' value={recommendation.country} name='country'onChange={handleInputChange} />
                 <FormInput placeholder='City' value={recommendation.city} name='city'onChange={handleInputChange} />
