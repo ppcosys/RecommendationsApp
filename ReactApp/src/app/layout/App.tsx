@@ -5,11 +5,14 @@ import NavBar from './NavBar';
 import RecommendationDashboard from '../../features/recommendations/dashboard/RecommendationDashboard';
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
+import LoadingComponent from './LoadingComponents';
 
 function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     agent.Recommendations.list().then(response => {
@@ -19,6 +22,7 @@ function App() {
         recommendations.push(recommendation);
       })
       setRecommendations(response);
+      setLoading(false);
       })
   }, [])
 
@@ -50,6 +54,10 @@ function App() {
   function handleDeleteRecommendation(id: string){
     setRecommendations([...recommendations.filter(x => x.id !== id)])
   }
+
+
+  if(loading) return <LoadingComponent content='Loading app' />
+
 
   return (
     <>
