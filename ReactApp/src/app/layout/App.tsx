@@ -12,6 +12,7 @@ function App() {
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
 
   useEffect(() => {
@@ -44,11 +45,24 @@ function App() {
   }
 
   function handleCreateOrEditRecommendation(recommendation: Recommendation){
-    recommendation.id 
-      ? setRecommendations([...recommendations.filter(x => x.id !== recommendation.id), recommendation])
-      : setRecommendations([...recommendations, recommendation, {...recommendation, id: uuid()}]);
-    setEditMode(false);
-    setSelectedRecommendation(recommendation);
+    setSubmitting(true);
+    if (recommendation.id){
+      agent.Recommendations.update(recommendation).then(() => {
+        setRecommendations([...recommendations.filter(x => x.id !== recommendation.id), recommendation])
+        setSelectedRecommendation(recommendation);
+        setEditMode(false);
+        setSubmitting(false);
+
+      })
+    } else {
+      recommendation.id = uuid();
+      agent.Recommendations.create(recommendation).then(() => {
+        setRecommendations([...recommendations, recommendation, recommendation])
+        setSelectedRecommendation(recommendation);
+        setEditMode(false);
+        setSubmitting(false);
+      })
+    }
   }
 
   function handleDeleteRecommendation(id: string){
@@ -73,6 +87,7 @@ function App() {
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditRecommendation}
           deleteRecommendation={handleDeleteRecommendation}
+          submitting={submitting}
         />
       </Container>
     </>

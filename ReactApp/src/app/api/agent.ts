@@ -37,7 +37,11 @@ const requests = {
 }
 
 const Recommendations = {
-    list: () => requests.get<Recommendation[]>('/recommendations')
+    list: () => requests.get<Recommendation[]>('/recommendations'),
+    details: (id: string) => requests.get<Recommendation>(`/recommendations/${id}`),
+    create: (recommendation: Recommendation) => requests.post<void>('/recommenations', recommendation),
+    update: (recommendation: Recommendation) => requests.put<void>(`/recommendations/${recommendation.id}`, recommendation),
+    delete: (id: string) => requests.del<void>(`/recommendations/${id}`)
 }
 
 const agent = {

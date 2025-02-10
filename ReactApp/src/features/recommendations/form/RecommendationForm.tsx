@@ -6,10 +6,11 @@ interface Props {
     recommendation: Recommendation | undefined;
     closeForm: () => void;
     createOrEdit: (recommendation: Recommendation) => void;
+    submitting: boolean;
 }
 
 
-export default function RecommendationForm({recommendation: selectedRecommendation, closeForm, createOrEdit}: Props){
+export default function RecommendationForm({recommendation: selectedRecommendation, closeForm, createOrEdit, submitting}: Props){
     
     const initialState = selectedRecommendation ?? {
         id: '',
@@ -45,7 +46,7 @@ export default function RecommendationForm({recommendation: selectedRecommendati
                 <FormInput placeholder='Country' value={recommendation.country} name='country'onChange={handleInputChange} />
                 <FormInput placeholder='City' value={recommendation.city} name='city'onChange={handleInputChange} />
                 <FormInput placeholder='Place' value={recommendation.place} name='place'onChange={handleInputChange} />
-                <Button floated='right' positive type='submit' content='Submit' />
+                <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
                 <Button onClick={closeForm} floated='right' type='submit' content='Cancel' />
             </Form>
         </Segment>
