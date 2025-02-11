@@ -66,7 +66,11 @@ function App() {
   }
 
   function handleDeleteRecommendation(id: string){
-    setRecommendations([...recommendations.filter(x => x.id !== id)])
+    setSubmitting(true);
+    agent.Recommendations.delete(id).then(() => {
+      setRecommendations([...recommendations.filter(x => x.id !== id)])
+      setSubmitting(false);
+    })
   }
 
 

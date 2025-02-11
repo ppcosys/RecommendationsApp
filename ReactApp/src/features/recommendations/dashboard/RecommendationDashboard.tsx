@@ -27,6 +27,7 @@ export default function RecommendationDashboard({recommendations, selectedRecomm
                 <RecommendationList recommendations = {recommendations} 
                     selectRecommendation={selectRecommendation}
                     deleteRecommendation={deleteRecommendation}
+                    submitting={submitting}
                 />
             </Grid.Column>
             <GridColumn width='6'>
