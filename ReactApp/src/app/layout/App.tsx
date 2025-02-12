@@ -6,8 +6,11 @@ import RecommendationDashboard from '../../features/recommendations/dashboard/Re
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponents';
+import { useStore } from '../stores/store';
 
 function App() {
+  const {recommendationStore} = useStore();
+
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
@@ -81,6 +84,8 @@ function App() {
     <>
       <NavBar openForm={handleFormOpen}/>
       <Container style={{marginTop: '7em'}}>
+        <h2>{recommendationStore.title}</h2>
+
         <RecommendationDashboard 
           recommendations={recommendations}
           selectedRecommendation={selectedRecommendation}
