@@ -9,6 +9,7 @@ Technologies used:
 - .NET 8.0
 - MediatR
 - Axios
+- MobX
 
 Design patterns:
 - Clean Architecture
