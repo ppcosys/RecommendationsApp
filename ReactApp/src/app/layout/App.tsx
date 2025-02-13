@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Container } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 import { Recommendation } from '../models/recommendation';
 import NavBar from './NavBar';
 import RecommendationDashboard from '../../features/recommendations/dashboard/RecommendationDashboard';
@@ -7,10 +7,10 @@ import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponents';
 import { useStore } from '../stores/store';
+import { observer } from 'mobx-react-lite';
 
 function App() {
   const {recommendationStore} = useStore();
-
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
@@ -85,7 +85,7 @@ function App() {
       <NavBar openForm={handleFormOpen}/>
       <Container style={{marginTop: '7em'}}>
         <h2>{recommendationStore.title}</h2>
-
+        <Button content='Add exclamation!' positive onClick={recommendationStore.setTitle} />
         <RecommendationDashboard 
           recommendations={recommendations}
           selectedRecommendation={selectedRecommendation}
@@ -103,4 +103,4 @@ function App() {
   )
 }
 
-export default App
+export default observer(App);
