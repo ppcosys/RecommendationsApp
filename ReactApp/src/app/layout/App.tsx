@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Recommendation } from '../models/recommendation';
 import NavBar from './NavBar';
 import RecommendationDashboard from '../../features/recommendations/dashboard/RecommendationDashboard';
@@ -14,21 +14,12 @@ function App() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
 
   useEffect(() => {
-    agent.Recommendations.list().then(response => {
-      let recommendations: Recommendation[] = [];  
-      response.forEach(recommendation => {
-        recommendation.date = recommendation.date.split('T')[0];
-        recommendations.push(recommendation);
-      })
-      setRecommendations(response);
-      setLoading(false);
-      })
-  }, [])
+    recommendationStore.loadRecommendations();
+  }, [recommendationStore])
 
   function handleSelectRecommendation(id: string) {
     setSelectedRecommendation(recommendations.find(x => x.id === id));
@@ -77,17 +68,15 @@ function App() {
   }
 
 
-  if(loading) return <LoadingComponent content='Loading app' />
+  if(recommendationStore.loadingInitial) return <LoadingComponent content='Loading app' />
 
 
   return (
     <>
       <NavBar openForm={handleFormOpen}/>
       <Container style={{marginTop: '7em'}}>
-        <h2>{recommendationStore.title}</h2>
-        <Button content='Add exclamation!' positive onClick={recommendationStore.setTitle} />
         <RecommendationDashboard 
-          recommendations={recommendations}
+          recommendations={recommendationStore.recommendations}
           selectedRecommendation={selectedRecommendation}
           selectRecommendation={handleSelectRecommendation}
           cancelSelectRecommendation={handleCancelSelectRecommendation}
