@@ -21,23 +21,6 @@ function App() {
     recommendationStore.loadRecommendations();
   }, [recommendationStore])
 
-  function handleSelectRecommendation(id: string) {
-    setSelectedRecommendation(recommendations.find(x => x.id === id));
-  }
-
-  function handleCancelSelectRecommendation() {
-    setSelectedRecommendation(undefined);
-  }
-
-  function handleFormOpen(id?: string){
-    id ? handleSelectRecommendation(id) : handleCancelSelectRecommendation();
-    setEditMode(true);
-  }
-  
-  function handleFormClose() {
-    setEditMode(false);
-  }
-
   function handleCreateOrEditRecommendation(recommendation: Recommendation){
     setSubmitting(true);
     if (recommendation.id){
@@ -73,16 +56,10 @@ function App() {
 
   return (
     <>
-      <NavBar openForm={handleFormOpen}/>
+      <NavBar />
       <Container style={{marginTop: '7em'}}>
         <RecommendationDashboard 
           recommendations={recommendationStore.recommendations}
-          selectedRecommendation={selectedRecommendation}
-          selectRecommendation={handleSelectRecommendation}
-          cancelSelectRecommendation={handleCancelSelectRecommendation}
-          editMode={editMode}
-          openForm={handleFormOpen}
-          closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditRecommendation}
           deleteRecommendation={handleDeleteRecommendation}
           submitting={submitting}

@@ -1,21 +1,23 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Recommendation } from '../../../app/models/recommendation'
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
+import { useStore } from '../../../app/stores/store';
 
 interface Props {
     recommendations: Recommendation[];
-    selectRecommendation: (id: string) => void;
     deleteRecommendation: (id: string) => void;
     submitting: boolean;
 }
 
-export default function RecommendationList({recommendations, selectRecommendation, deleteRecommendation, submitting }: Props) {
+export default function RecommendationList({recommendations, deleteRecommendation, submitting }: Props) {
     const [target, setTarget] = useState('');
     
     function handleRecommendationDelete(e: SyntheticEvent<HTMLButtonElement>, id: string){
         setTarget(e.currentTarget.name);
         deleteRecommendation(id);
     }
+
+    const {recommendationStore} = useStore();
 
     return (
         <Segment>
@@ -30,7 +32,7 @@ export default function RecommendationList({recommendations, selectRecommendatio
                                 <div>{recommendation.city}, {recommendation.place}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => selectRecommendation(recommendation.id)} floated='right' content='View' color='blue' />
+                                <Button onClick={() => recommendationStore.selectRecommendation(recommendation.id)} floated='right' content='View' color='blue' />
                                 <Button
                                     name={recommendation.id}
                                     loading={submitting && target === recommendation.id} 

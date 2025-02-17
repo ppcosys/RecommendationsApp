@@ -1,14 +1,15 @@
 import React from 'react';
 import { Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardMeta, Image } from 'semantic-ui-react';
 import { Recommendation } from '../../../app/models/recommendation';
+import { useStore } from '../../../app/stores/store';
+import LoadingComponent from '../../../app/layout/LoadingComponents';
 
-interface Props{
-    recommendation: Recommendation;
-    cancelSelectRecommendation: () => void;
-    openForm: (id: string) => void;
-}
+export default function RecommendationDetails() {
+    const {recommendationStore} = useStore();
+    const {selectedRecommendation: recommendation, openForm, cancelSelectedRecommendation} = recommendationStore;
 
-export default function RecommendationDetails({recommendation, cancelSelectRecommendation, openForm} : Props) {
+    if (! recommendation) return <LoadingComponent />;
+
     return(
         <Card fluid>
             <Image src={`/assets/categoryImages/${recommendation.category}.jpg`}/>
@@ -24,7 +25,7 @@ export default function RecommendationDetails({recommendation, cancelSelectRecom
             <CardContent extra>
                 <ButtonGroup widths='2'>
                     <Button onClick={() => openForm(recommendation.id)} basic color='blue' content='Edit' />
-                    <Button onClick={cancelSelectRecommendation} basic color='grey' content='Cancel' />
+                    <Button onClick={cancelSelectedRecommendation} basic color='grey' content='Cancel' />
                 </ButtonGroup>
             </CardContent>
         </Card>

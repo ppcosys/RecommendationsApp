@@ -4,7 +4,7 @@ import agent from "../api/agent";
 
 export default class RecommendationStore{
     recommendations: Recommendation[] = [];
-    selectedRecommendation: Recommendation | null = null;
+    selectedRecommendation: Recommendation | undefined = undefined;
     editMode = false;
     loading = false;
     loadingInitial = false;
@@ -31,5 +31,23 @@ export default class RecommendationStore{
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
+    }
+
+    selectRecommendation = (id: string) => {
+        this.selectedRecommendation = this.recommendations.find(a => a.id === id);
+    }
+
+    cancelSelectedRecommendation = () => {
+        this.selectedRecommendation = undefined;
+
+    }
+
+    openForm = (id?: string) => {
+        id ? this.selectRecommendation(id) : this.cancelSelectedRecommendation();
+        this.editMode = true;
+    }
+
+    closeForm = () => {
+        this.editMode = false;
     }
 }

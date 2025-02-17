@@ -1,17 +1,18 @@
 import React, { ChangeEvent, useState } from "react";
 import { Button, Form, FormInput, FormTextArea, Segment } from "semantic-ui-react";
 import { Recommendation } from "../../../app/models/recommendation";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
-    recommendation: Recommendation | undefined;
-    closeForm: () => void;
     createOrEdit: (recommendation: Recommendation) => void;
     submitting: boolean;
 }
 
 
-export default function RecommendationForm({recommendation: selectedRecommendation, closeForm, createOrEdit, submitting}: Props){
-    
+export default function RecommendationForm({createOrEdit, submitting}: Props){
+    const {recommendationStore} = useStore();
+    const {selectedRecommendation, closeForm} = recommendationStore;
+
     const initialState = selectedRecommendation ?? {
         id: '',
         title: '',
