@@ -2,16 +2,12 @@ import React, { ChangeEvent, useState } from "react";
 import { Button, Form, FormInput, FormTextArea, Segment } from "semantic-ui-react";
 import { Recommendation } from "../../../app/models/recommendation";
 import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    createOrEdit: (recommendation: Recommendation) => void;
-    submitting: boolean;
-}
-
-
-export default function RecommendationForm({createOrEdit, submitting}: Props){
+export default observer(function RecommendationForm(){
     const {recommendationStore} = useStore();
-    const {selectedRecommendation, closeForm} = recommendationStore;
+    const {selectedRecommendation, closeForm, createRecommendation, updateRecommendation,
+            loading} = recommendationStore;
 
     const initialState = selectedRecommendation ?? {
         id: '',
@@ -28,7 +24,7 @@ export default function RecommendationForm({createOrEdit, submitting}: Props){
     const [recommendation, setRecommendation] = useState(initialState);
 
     function handleSubmit(){
-        createOrEdit(recommendation);
+        recommendation.id ? updateRecommendation(recommendation) : createRecommendation(recommendation)
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -47,9 +43,9 @@ export default function RecommendationForm({createOrEdit, submitting}: Props){
                 <FormInput placeholder='Country' value={recommendation.country} name='country'onChange={handleInputChange} />
                 <FormInput placeholder='City' value={recommendation.city} name='city'onChange={handleInputChange} />
                 <FormInput placeholder='Place' value={recommendation.place} name='place'onChange={handleInputChange} />
-                <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
+                <Button loading={loading} floated='right' positive type='submit' content='Submit' />
                 <Button onClick={closeForm} floated='right' type='submit' content='Cancel' />
             </Form>
         </Segment>
     )
-}
+})

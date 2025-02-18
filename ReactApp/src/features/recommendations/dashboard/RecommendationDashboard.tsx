@@ -9,13 +9,11 @@ import { observer } from 'mobx-react-lite';
 
 interface Props {   
     recommendations: Recommendation[];
-    createOrEdit: (recommendation: Recommendation) => void;
     deleteRecommendation: (id: string) => void;
     submitting: boolean;
 }
 
-export default observer(function RecommendationDashboard({recommendations, deleteRecommendation,
-        createOrEdit, submitting}: Props){
+export default observer(function RecommendationDashboard({recommendations, deleteRecommendation, submitting}: Props){
 
     const {recommendationStore} = useStore();
     const {selectedRecommendation, editMode} = recommendationStore;
@@ -31,10 +29,7 @@ export default observer(function RecommendationDashboard({recommendations, delet
                 {selectedRecommendation && !editMode &&
                 <RecommendationDetails />}
                 {editMode &&
-                <RecommendationForm 
-                    createOrEdit={createOrEdit}
-                    submitting={submitting}
-                />}
+                <RecommendationForm />}
             </GridColumn>
         </Grid>
     )

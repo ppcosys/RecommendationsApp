@@ -1,6 +1,7 @@
-import { makeAutoObservable} from "mobx"
+import { makeAutoObservable, runInAction} from "mobx"
 import { Recommendation } from "../models/recommendation"
 import agent from "../api/agent";
+import {v4 as uuid} from 'uuid';
 
 export default class RecommendationStore{
     recommendations: Recommendation[] = [];
@@ -49,5 +50,43 @@ export default class RecommendationStore{
 
     closeForm = () => {
         this.editMode = false;
+    }
+
+    createRecommendation = async (recommendation: Recommendation) => {
+        this.loading = true;
+        recommendation.id = uuid();
+        try {
+            await agent.Recommendations.create(recommendation);
+            runInAction(() => {
+                this.recommendations.push(recommendation);
+                this.selectedRecommendation = recommendation;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+
+            })
+        }
+    }
+
+    updateRecommendation = async (recommendation: Recommendation) => {
+        this.loading = true;
+        try {
+            await agent.Recommendations.update(recommendation);
+            runInAction(() => {
+                this.recommendations = [...this.recommendations.filter(a => a.id !== recommendation.id), recommendation];
+                this.selectedRecommendation = recommendation;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
     }
 }
