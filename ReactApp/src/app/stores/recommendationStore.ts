@@ -89,4 +89,21 @@ export default class RecommendationStore{
             })
         }
     }
+
+    deleteRecommendation = async (id: string) => {
+        this.loading = true;
+        try{
+            await agent.Recommendations.delete(id);
+            runInAction(() => {
+                this.recommendations = [...this.recommendations.filter(a => a.id !== id)];
+                if (this.selectedRecommendation?.id === id) this.cancelSelectedRecommendation;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
 }
