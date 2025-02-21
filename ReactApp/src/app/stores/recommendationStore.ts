@@ -4,26 +4,30 @@ import agent from "../api/agent";
 import {v4 as uuid} from 'uuid';
 
 export default class RecommendationStore{
-    recommendations: Recommendation[] = [];
+    recommendationRegistry = new Map<string, Recommendation>();
     selectedRecommendation: Recommendation | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = false;
+    loadingInitial = true;
 
     constructor() {
         makeAutoObservable(this)
     }
 
+    get recommendationsByDate() {
+        return Array.from(this.recommendationRegistry.values()).sort((a,b) => 
+            Date.parse(a.date) - Date.parse(b.date));
+    }
+
     loadRecommendations = async () => {
-        this.setLoadingInitial(true);
         try {
             const recommendations = await agent.Recommendations.list();
 
-                recommendations.forEach(recommendation => {
-                    recommendation.date = recommendation.date.split('T')[0];
-                    this.recommendations.push(recommendation);
-                })
-                this.setLoadingInitial(false);
+            recommendations.forEach(recommendation => {
+                recommendation.date = recommendation.date.split('T')[0];
+                this.recommendationRegistry.set(recommendation.id, recommendation);
+            })
+            this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
@@ -35,7 +39,7 @@ export default class RecommendationStore{
     }
 
     selectRecommendation = (id: string) => {
-        this.selectedRecommendation = this.recommendations.find(a => a.id === id);
+        this.selectedRecommendation = this.recommendationRegistry.get(id);
     }
 
     cancelSelectedRecommendation = () => {
@@ -58,7 +62,7 @@ export default class RecommendationStore{
         try {
             await agent.Recommendations.create(recommendation);
             runInAction(() => {
-                this.recommendations.push(recommendation);
+                this.recommendationRegistry.set(recommendation.id, recommendation);
                 this.selectedRecommendation = recommendation;
                 this.editMode = false;
                 this.loading = false;
@@ -77,7 +81,7 @@ export default class RecommendationStore{
         try {
             await agent.Recommendations.update(recommendation);
             runInAction(() => {
-                this.recommendations = [...this.recommendations.filter(a => a.id !== recommendation.id), recommendation];
+                this.recommendationRegistry.set(recommendation.id, recommendation);
                 this.selectedRecommendation = recommendation;
                 this.editMode = false;
                 this.loading = false;
@@ -95,7 +99,7 @@ export default class RecommendationStore{
         try{
             await agent.Recommendations.delete(id);
             runInAction(() => {
-                this.recommendations = [...this.recommendations.filter(a => a.id !== id)];
+                this.recommendationRegistry.delete(id);
                 if (this.selectedRecommendation?.id === id) this.cancelSelectedRecommendation;
                 this.loading = false;
             })

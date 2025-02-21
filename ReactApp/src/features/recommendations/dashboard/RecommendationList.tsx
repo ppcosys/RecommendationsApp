@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 
 export default observer (function RecommendationList() {
     const {recommendationStore} = useStore();
-    const {deleteRecommendation , recommendations, loading} = recommendationStore;
+    const {deleteRecommendation , recommendationsByDate, loading} = recommendationStore;
     
     const [target, setTarget] = useState('');
     
@@ -20,7 +20,7 @@ export default observer (function RecommendationList() {
     return (
         <Segment>
             <Item.Group divided>
-                {recommendations.map(recommendation => (
+                {recommendationsByDate.map(recommendation => (
                     <Item key={recommendation.id}>
                         <Item.Content>
                             <Item.Header as='a'>{recommendation.title}</Item.Header>
