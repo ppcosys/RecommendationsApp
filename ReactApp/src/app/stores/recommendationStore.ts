@@ -23,14 +23,18 @@ export default class RecommendationStore{
         try {
             const recommendations = await agent.Recommendations.list();
 
-            recommendations.forEach(recommendation => {
-                recommendation.date = recommendation.date.split('T')[0];
-                this.recommendationRegistry.set(recommendation.id, recommendation);
-            })
+            runInAction(() => {
+                recommendations.forEach(recommendation => {
+                    recommendation.date = recommendation.date.split('T')[0];
+                    this.recommendationRegistry.set(recommendation.id, recommendation);
+                })
+            });
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
-            this.setLoadingInitial(false);
+            runInAction(() => {
+                this.setLoadingInitial(false);
+            });
         }
     }
 

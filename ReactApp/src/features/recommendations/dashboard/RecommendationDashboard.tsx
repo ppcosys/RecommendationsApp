@@ -9,7 +9,6 @@ import LoadingComponent from '../../../app/layout/LoadingComponents';
 
 
 export default observer(function RecommendationDashboard(){
-
     const {recommendationStore} = useStore();
     const {selectedRecommendation, editMode} = recommendationStore;
 

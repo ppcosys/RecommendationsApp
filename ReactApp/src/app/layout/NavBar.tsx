@@ -1,21 +1,18 @@
 import React from 'react';
 import { Button, Container, Menu } from 'semantic-ui-react';
-import { useStore } from '../stores/store';
-
+import { NavLink } from 'react-router-dom';
 
 export default function NavBar() {
-    const {recommendationStore} = useStore();
-    
     return (
         <Menu inverted fixed='top'>
             <Container>
-                <Menu.Item header>
+                <Menu.Item as={NavLink} to='/' header>
                     <img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}}/>
                     Recommendations
                 </Menu.Item>
-                <Menu.Item name='Recommendations'/>
+                <Menu.Item as={NavLink} to='/recommendations' name='Recommendations'/>
                 <Menu.Item>
-                    <Button onClick={() => recommendationStore.openForm()} positive content='Create Recommendation'/>
+                    <Button as={NavLink} to='/createRecommendation' positive content='Create Recommendation'/>
                 </Menu.Item>
             </Container>
         </Menu>
