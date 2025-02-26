@@ -20,13 +20,12 @@ export default class RecommendationStore{
     }
 
     loadRecommendations = async () => {
+        this.setLoadingInitial(true);
         try {
             const recommendations = await agent.Recommendations.list();
-
             runInAction(() => {
                 recommendations.forEach(recommendation => {
-                    recommendation.date = recommendation.date.split('T')[0];
-                    this.recommendationRegistry.set(recommendation.id, recommendation);
+                    this.setRecommendation(recommendation);
                 })
             });
             this.setLoadingInitial(false);
@@ -38,26 +37,34 @@ export default class RecommendationStore{
         }
     }
 
+    loadRecommendation = async (id: string) => {
+        let recommendation = this.getRecommendation(id);
+        if(recommendation) this.selectedRecommendation = recommendation;
+        else {
+            this.setLoadingInitial(true);
+            try {
+                recommendation = await agent.Recommendations.details(id);
+                this.setRecommendation(recommendation);
+                this.selectedRecommendation = recommendation;
+                this.setLoadingInitial(false);
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
+    private setRecommendation = (recommendation: Recommendation) => {
+        recommendation.date = recommendation.date.split('T')[0];
+        this.recommendationRegistry.set(recommendation.id, recommendation);
+    }
+
+    private getRecommendation = (id: string) => {
+        return this.recommendationRegistry.get(id);
+    }
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
-    }
-
-    selectRecommendation = (id: string) => {
-        this.selectedRecommendation = this.recommendationRegistry.get(id);
-    }
-
-    cancelSelectedRecommendation = () => {
-        this.selectedRecommendation = undefined;
-
-    }
-
-    openForm = (id?: string) => {
-        id ? this.selectRecommendation(id) : this.cancelSelectedRecommendation();
-        this.editMode = true;
-    }
-
-    closeForm = () => {
-        this.editMode = false;
     }
 
     createRecommendation = async (recommendation: Recommendation) => {
@@ -104,7 +111,6 @@ export default class RecommendationStore{
             await agent.Recommendations.delete(id);
             runInAction(() => {
                 this.recommendationRegistry.delete(id);
-                if (this.selectedRecommendation?.id === id) this.cancelSelectedRecommendation;
                 this.loading = false;
             })
         } catch (error) {

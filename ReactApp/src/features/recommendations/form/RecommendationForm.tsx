@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function RecommendationForm(){
     const {recommendationStore} = useStore();
-    const {selectedRecommendation, closeForm, createRecommendation, updateRecommendation,
+    const {selectedRecommendation, createRecommendation, updateRecommendation,
             loading} = recommendationStore;
 
     const initialState = selectedRecommendation ?? {
@@ -43,7 +43,7 @@ export default observer(function RecommendationForm(){
                 <FormInput placeholder='City' value={recommendation.city} name='city'onChange={handleInputChange} />
                 <FormInput placeholder='Place' value={recommendation.place} name='place'onChange={handleInputChange} />
                 <Button loading={loading} floated='right' positive type='submit' content='Submit' />
-                <Button onClick={closeForm} floated='right' type='submit' content='Cancel' />
+                <Button floated='right' type='submit' content='Cancel' />
             </Form>
         </Segment>
     )

@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardMeta, Image } from 'semantic-ui-react';
 import { Recommendation } from '../../../app/models/recommendation';
 import { useStore } from '../../../app/stores/store';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
+import { observer } from 'mobx-react-lite';
+import { useParams } from 'react-router-dom';
 
-export default function RecommendationDetails() {
+export default observer (function RecommendationDetails() {
     const {recommendationStore} = useStore();
-    const {selectedRecommendation: recommendation, openForm, cancelSelectedRecommendation} = recommendationStore;
+    const {selectedRecommendation: recommendation, loadRecommendation, loadingInitial} = recommendationStore;
+    const {id} = useParams();
 
-    if (! recommendation) return <LoadingComponent />;
+    useEffect(() => {
+        if (id) loadRecommendation(id);
+    }, [id, loadRecommendation])
+    
+    if (loadingInitial || !recommendation) return <LoadingComponent />;
 
     return(
         <Card fluid>
@@ -24,10 +31,10 @@ export default function RecommendationDetails() {
             </CardContent>
             <CardContent extra>
                 <ButtonGroup widths='2'>
-                    <Button onClick={() => openForm(recommendation.id)} basic color='blue' content='Edit' />
-                    <Button onClick={cancelSelectedRecommendation} basic color='grey' content='Cancel' />
+                    <Button basic color='blue' content='Edit' />
+                    <Button basic color='grey' content='Cancel' />
                 </ButtonGroup>
             </CardContent>
         </Card>
     )
-}
+})

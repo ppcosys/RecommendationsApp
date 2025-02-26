@@ -3,6 +3,7 @@ import { Recommendation } from '../../../app/models/recommendation'
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 
 
 
@@ -30,7 +31,8 @@ export default observer (function RecommendationList() {
                                 <div>{recommendation.city}, {recommendation.place}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => recommendationStore.selectRecommendation(recommendation.id)} floated='right' content='View' color='blue' />
+                                <Button as={Link} to={`/recommendations/${recommendation.id}`} 
+                                    floated='right' content='View' color='blue'/>
                                 <Button
                                     name={recommendation.id}
                                     loading={loading && target === recommendation.id} 
