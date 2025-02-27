@@ -4,7 +4,7 @@ import { Recommendation } from '../../../app/models/recommendation';
 import { useStore } from '../../../app/stores/store';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default observer (function RecommendationDetails() {
     const {recommendationStore} = useStore();
@@ -31,8 +31,8 @@ export default observer (function RecommendationDetails() {
             </CardContent>
             <CardContent extra>
                 <ButtonGroup widths='2'>
-                    <Button basic color='blue' content='Edit' />
-                    <Button basic color='grey' content='Cancel' />
+                    <Button as={Link} to={`/manage/${recommendation.id}`} basic color='blue' content='Edit' />
+                    <Button as={Link} to='/activities' basic color='grey' content='Cancel' />
                 </ButtonGroup>
             </CardContent>
         </Card>

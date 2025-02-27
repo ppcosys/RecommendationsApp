@@ -1,14 +1,18 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button, Form, FormInput, FormTextArea, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { useParams } from "react-router-dom";
+import { Recommendation } from "../../../app/models/recommendation";
+import LoadingComponent from "../../../app/layout/LoadingComponents";
 
 export default observer(function RecommendationForm(){
     const {recommendationStore} = useStore();
     const {selectedRecommendation, createRecommendation, updateRecommendation,
-            loading} = recommendationStore;
+            loading, loadRecommendation, loadingInitial} = recommendationStore;
+    const {id} = useParams();
 
-    const initialState = selectedRecommendation ?? {
+    const [recommendation, setRecommendation] = useState<Recommendation>({
         id: '',
         title: '',
         category: '',
@@ -17,10 +21,12 @@ export default observer(function RecommendationForm(){
         description: '',
         country: '',
         city: '',
-        place: ''
-    }
-    
-    const [recommendation, setRecommendation] = useState(initialState);
+        place: '' 
+    });
+
+    useEffect(() => {
+        if (id) loadRecommendation(id).then(recommendation => setRecommendation(recommendation!))
+    }, [id, loadRecommendation]);
 
     function handleSubmit(){
         recommendation.id ? updateRecommendation(recommendation) : createRecommendation(recommendation)
@@ -30,6 +36,8 @@ export default observer(function RecommendationForm(){
         const {name, value} = event.target;
         setRecommendation({...recommendation, [name]: value})
     }
+
+    if (loadingInitial) return <LoadingComponent content='Loading recommendation...' />
 
     return (
         <Segment clearing>

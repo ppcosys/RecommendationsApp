@@ -14,6 +14,7 @@ export const routes: RouteObject[] = [
             {path: 'recommendations', element: <RecommendationDashboard />},
             {path: 'recommendations/:id', element: <RecommendationDetails />},
             {path: 'createRecommendation', element: <RecommendationForm />},
+            {path: 'manage/:id', element: <RecommendationForm />},
         ]
    },
 ]

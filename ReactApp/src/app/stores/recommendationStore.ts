@@ -39,14 +39,18 @@ export default class RecommendationStore{
 
     loadRecommendation = async (id: string) => {
         let recommendation = this.getRecommendation(id);
-        if(recommendation) this.selectedRecommendation = recommendation;
+        if(recommendation) {
+            this.selectedRecommendation = recommendation;
+            return recommendation;
+        }
         else {
             this.setLoadingInitial(true);
             try {
                 recommendation = await agent.Recommendations.details(id);
                 this.setRecommendation(recommendation);
-                this.selectedRecommendation = recommendation;
+                runInAction(() => this.selectedRecommendation = recommendation)                
                 this.setLoadingInitial(false);
+                return recommendation;
             } catch (error) {
                 console.log(error);
                 this.setLoadingInitial(false);
