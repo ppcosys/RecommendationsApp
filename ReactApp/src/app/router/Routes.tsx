@@ -13,8 +13,8 @@ export const routes: RouteObject[] = [
             {path: '', element: <HomePage />},
             {path: 'recommendations', element: <RecommendationDashboard />},
             {path: 'recommendations/:id', element: <RecommendationDetails />},
-            {path: 'createRecommendation', element: <RecommendationForm />},
-            {path: 'manage/:id', element: <RecommendationForm />},
+            {path: 'createRecommendation', element: <RecommendationForm key='create'/>},
+            {path: 'manage/:id', element: <RecommendationForm key='manage'/>},
         ]
    },
 ]
