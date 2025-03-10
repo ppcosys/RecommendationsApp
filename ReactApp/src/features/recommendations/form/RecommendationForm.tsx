@@ -2,15 +2,17 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button, Form, FormInput, FormTextArea, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Recommendation } from "../../../app/models/recommendation";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
+import {v4 as uuid} from 'uuid';
 
 export default observer(function RecommendationForm(){
     const {recommendationStore} = useStore();
     const {selectedRecommendation, createRecommendation, updateRecommendation,
             loading, loadRecommendation, loadingInitial} = recommendationStore;
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const [recommendation, setRecommendation] = useState<Recommendation>({
         id: '',
@@ -29,7 +31,12 @@ export default observer(function RecommendationForm(){
     }, [id, loadRecommendation]);
 
     function handleSubmit(){
-        recommendation.id ? updateRecommendation(recommendation) : createRecommendation(recommendation)
+        if (!recommendation.id){
+            recommendation.id = uuid();
+            createRecommendation(recommendation).then(() => navigate(`/recommendations/${recommendation.id}`))
+        } else {
+            updateRecommendation(recommendation).then(() => navigate(`/recommendations/${recommendation.id}`))
+        }
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
