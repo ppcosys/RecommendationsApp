@@ -8,10 +8,11 @@ import LoadingComponent from '../../../app/layout/LoadingComponents';
 
 export default observer(function RecommendationDashboard(){
     const {recommendationStore} = useStore();
+    const {loadRecommendations, recommendationRegistry} = recommendationStore;
 
     useEffect(() => {
-        recommendationStore.loadRecommendations();
-      }, [recommendationStore])
+        if (recommendationRegistry.size === 0) loadRecommendations();
+      }, [loadRecommendations])
     
       if(recommendationStore.loadingInitial) return <LoadingComponent content='Loading app' />
 
