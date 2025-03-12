@@ -11,7 +11,7 @@ export default observer(function RecommendationDashboard(){
     const {loadRecommendations, recommendationRegistry} = recommendationStore;
 
     useEffect(() => {
-        if (recommendationRegistry.size === 0) loadRecommendations();
+        if (recommendationRegistry.size <= 1) loadRecommendations();
       }, [loadRecommendations])
     
       if(recommendationStore.loadingInitial) return <LoadingComponent content='Loading app' />

@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button, Form, FormInput, FormTextArea, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Recommendation } from "../../../app/models/recommendation";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 import {v4 as uuid} from 'uuid';
@@ -58,7 +58,7 @@ export default observer(function RecommendationForm(){
                 <FormInput placeholder='City' value={recommendation.city} name='city'onChange={handleInputChange} />
                 <FormInput placeholder='Place' value={recommendation.place} name='place'onChange={handleInputChange} />
                 <Button loading={loading} floated='right' positive type='submit' content='Submit' />
-                <Button floated='right' type='submit' content='Cancel' />
+                <Button as={Link} to='/recommendations' floated='right' type='submit' content='Cancel' />
             </Form>
         </Segment>
     )
