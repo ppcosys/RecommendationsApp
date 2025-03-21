@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useState } from 'react';
-import { Button, Item, Label } from 'semantic-ui-react';
+import { Button, Icon, Item, ItemContent, ItemGroup, Label, Segment, SegmentGroup } from 'semantic-ui-react';
 import { Recommendation } from '../../../app/models/recommendation';
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../app/stores/store';
@@ -22,27 +22,39 @@ export default function RecommendationListItem({recommendation}: Props) {
     
     
     return (
-        <Item key={recommendation.id}>
-            <Item.Content>
-                <Item.Header as='a'>{recommendation.title}</Item.Header>
-                <Item.Meta>{recommendation.date}</Item.Meta>
-                <Item.Description>
-                    <div>{recommendation.description}</div>
-                    <div>{recommendation.city}, {recommendation.place}</div>
-                </Item.Description>
-                <Item.Extra>
-                    <Button as={Link} to={`/recommendations/${recommendation.id}`} 
-                        floated='right' content='View' color='blue'/>
-                    <Button
-                        name={recommendation.id}
-                        loading={loading && target === recommendation.id} 
-                        onClick={(e) => handleRecommendationDelete(e, recommendation.id)} 
-                        floated='right' 
-                        content='Delete' 
-                        color='red' />
-                    <Label basic content={recommendation.category} />
-                </Item.Extra>
-            </Item.Content>
-        </Item>
+        <SegmentGroup>
+            <Segment>
+                <ItemGroup>
+                    <Item>
+                        <Item.Image size='tiny' circular src='/assets/user.png' />
+                        <Item.Content>
+                            <Item.Header as={Link} to={`/recommendations/${recommendation.id}`}>
+                                {recommendation.title}
+                            </Item.Header>
+                            <Item.Description>UsernamePlaceholder</Item.Description>
+                        </Item.Content>
+                    </Item>
+                </ItemGroup>
+            </Segment>
+            <Segment>
+                <span>
+                    <Icon name='clock' /> {recommendation.date}
+                    <Icon name='marker' /> {recommendation.place}
+                </span>
+            </Segment>
+            <Segment secondary>
+                Other Users...
+            </Segment>
+            <Segment>
+                <span>{recommendation.description}</span>
+                <Button
+                    as={Link}
+                    to={`/recommendations/${recommendation.id}`}
+                    color='teal'
+                    floated='right'
+                    content='View'
+                />
+            </Segment>
+        </SegmentGroup>
     )
 }
