@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
-import { Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardMeta, Image } from 'semantic-ui-react';
+import { Button, ButtonGroup, Card, CardContent, CardDescription, CardHeader, CardMeta, Grid, Image } from 'semantic-ui-react';
 import { Recommendation } from '../../../app/models/recommendation';
 import { useStore } from '../../../app/stores/store';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { observer } from 'mobx-react-lite';
 import { Link, useParams } from 'react-router-dom';
+import RecommendationDetailedHeader from './RecommendationDetailedHeader';
+import RecommendationDetailedInfo from './RecommendationDetailedInfo';
+import RecommendationDetailedChat from './RecommendationDetailedChat';
+import RecommendationDetailedSidebar from './RecommendationDetailedSidebar';
 
 export default observer (function RecommendationDetails() {
     const {recommendationStore} = useStore();
@@ -18,23 +22,15 @@ export default observer (function RecommendationDetails() {
     if (loadingInitial || !recommendation) return <LoadingComponent />;
 
     return(
-        <Card fluid>
-            <Image src={`/assets/categoryImages/${recommendation.category}.jpg`}/>
-            <CardContent>
-                <CardHeader>{recommendation.title}</CardHeader>
-                <CardMeta>
-                    <span>{recommendation.date}</span>
-                </CardMeta>
-                <CardDescription>
-                    {recommendation.description}
-                </CardDescription>
-            </CardContent>
-            <CardContent extra>
-                <ButtonGroup widths='2'>
-                    <Button as={Link} to={`/manage/${recommendation.id}`} basic color='blue' content='Edit' />
-                    <Button as={Link} to='/activities' basic color='grey' content='Cancel' />
-                </ButtonGroup>
-            </CardContent>
-        </Card>
+        <Grid>
+            <Grid.Column width={10}>
+                <RecommendationDetailedHeader/>
+                <RecommendationDetailedInfo />
+                <RecommendationDetailedChat />
+            </Grid.Column>
+            <Grid.Column width={6}>
+                <RecommendationDetailedSidebar />
+            </Grid.Column>
+        </Grid>
     )
 })

@@ -4,6 +4,7 @@ import { Recommendation } from '../../../app/models/recommendation';
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../app/stores/store';
 
+
 interface Props {
     recommendation: Recommendation
 }
@@ -45,7 +46,7 @@ export default function RecommendationListItem({recommendation}: Props) {
             <Segment secondary>
                 Other Users...
             </Segment>
-            <Segment>
+            <Segment clearing>
                 <span>{recommendation.description}</span>
                 <Button
                     as={Link}
