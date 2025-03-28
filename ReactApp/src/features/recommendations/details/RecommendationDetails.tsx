@@ -24,8 +24,8 @@ export default observer (function RecommendationDetails() {
     return(
         <Grid>
             <Grid.Column width={10}>
-                <RecommendationDetailedHeader/>
-                <RecommendationDetailedInfo />
+                <RecommendationDetailedHeader recommendation={recommendation}/>
+                <RecommendationDetailedInfo recommendation={recommendation}/>
                 <RecommendationDetailedChat />
             </Grid.Column>
             <Grid.Column width={6}>
