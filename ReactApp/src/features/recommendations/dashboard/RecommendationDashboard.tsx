@@ -4,6 +4,7 @@ import RecommendationList from './RecommendationList'
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
+import RecommendationFilters from './RecommendationsFilters';
 
 
 export default observer(function RecommendationDashboard(){
@@ -22,7 +23,7 @@ export default observer(function RecommendationDashboard(){
                 <RecommendationList />
             </Grid.Column>
             <GridColumn width='6'>
-                <h2>Recommendation filters</h2>
+                <RecommendationFilters />
             </GridColumn>
         </Grid>
     )
