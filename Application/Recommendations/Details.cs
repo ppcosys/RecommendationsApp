@@ -1,3 +1,4 @@
+using Application.Core;
 using Domain;
 using MediatR;
 using Persistence;
@@ -6,12 +7,12 @@ namespace Application.Recommendations
 {
     public class Details
     {
-        public class Query : IRequest<Recommendation>
+        public class Query : IRequest<Result<Recommendation>>
         {
             public Guid Id {get; set;}
         }
 
-        public class Handler : IRequestHandler<Query, Recommendation>
+        public class Handler : IRequestHandler<Query, Result<Recommendation>>
         {
         private readonly DataContext _context;
             public Handler(DataContext context)
@@ -19,9 +20,11 @@ namespace Application.Recommendations
                 _context = context;                
             }
 
-            public async Task<Recommendation> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Recommendation>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Recommendations.FindAsync(request.Id);
+                var recommendation =  await _context.Recommendations.FindAsync(request.Id);
+
+                return Result<Recommendation>.Success(recommendation);
             }
         }
     }
