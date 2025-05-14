@@ -14,7 +14,7 @@ namespace Application.Recommendations
 
         public class Handler : IRequestHandler<Query, Result<Recommendation>>
         {
-        private readonly DataContext _context;
+            private readonly DataContext _context;
             public Handler(DataContext context)
             {
                 _context = context;                

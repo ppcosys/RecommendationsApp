@@ -23,9 +23,9 @@ namespace API.Controllers
         }
 
         [HttpGet] //api/recommendations
-        public async Task<ActionResult<List<Recommendation>>> GetRecommendations()
+        public async Task<IActionResult> GetRecommendations()
         {
-            return await _mediator.Send(new List.Query());
+            return HandleResult(await _mediator.Send(new List.Query()));
         }
         
         [HttpGet("{id}")] //api/recommendations/guid

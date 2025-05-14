@@ -6,14 +6,15 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Application.Core;
 
 namespace Application.Recommendations
 {
     public class List
     {
-        public class Query : IRequest<List<Recommendation>> {}
+        public class Query : IRequest<Result<List<Recommendation>>> {}
 
-        public class Handler : IRequestHandler<Query, List<Recommendation>>
+        public class Handler : IRequestHandler<Query, Result<List<Recommendation>>>
         {
             private readonly DataContext _context;
 
@@ -23,9 +24,9 @@ namespace Application.Recommendations
                 
             }
 
-            public async Task<List<Recommendation>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Recommendation>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Recommendations.ToListAsync();
+                return Result<List<Recommendation>>.Success(await _context.Recommendations.ToListAsync());
             }
         }
     }
