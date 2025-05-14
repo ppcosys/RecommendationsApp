@@ -5,17 +5,18 @@ using System.Threading.Tasks;
 using Domain;
 using MediatR;
 using Persistence;
+using Application.Core;
 
 namespace Application.Recommendations
 {
     public class Create
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Recommendation Recommendation {get; set;}
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -24,11 +25,15 @@ namespace Application.Recommendations
 
             }
 
-            public async Task Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 _context.Recommendations.Add(request.Recommendation);
 
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return Result<Unit>.Failure("Failed to create recommendation");
+
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }

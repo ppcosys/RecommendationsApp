@@ -37,8 +37,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRecommendation(Recommendation recommendation)
         {
-            await Mediator.Send(new Create.Command {Recommendation =recommendation});
-            return Ok();
+            return HandleResult(await Mediator.Send(new Create.Command {Recommendation =recommendation}));
         }
         
         [HttpPut("{id}")]
