@@ -37,7 +37,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRecommendation(Recommendation recommendation)
         {
-            return HandleResult(await Mediator.Send(new Create.Command {Recommendation =recommendation}));
+            return HandleResult(await Mediator.Send(new Create.Command {Recommendation = recommendation}));
         }
         
         [HttpPut("{id}")]
@@ -53,9 +53,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecommendaton(Guid id)
         {
-            await Mediator.Send(new Delete.Command {Id = id});
-
-            return Ok();
+            return HandleResult(await Mediator.Send(new Delete.Command {Id = id}));
         }
     }
 }
