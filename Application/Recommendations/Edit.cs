@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Core;
 using AutoMapper;
 using Domain;
 using MediatR;
@@ -11,12 +12,12 @@ namespace Application.Recommendations
 {
     public class Edit
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Recommendation Recommendation { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -27,13 +28,19 @@ namespace Application.Recommendations
                 
             }
 
-            public async Task Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var recommendation = await _context.Recommendations.FindAsync(request.Recommendation.Id);
 
+                if (recommendation == null) return null;
+
                 _mapper.Map(request.Recommendation, recommendation);
 
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return Result<Unit>.Failure("Failed to update recommendation");
+
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }

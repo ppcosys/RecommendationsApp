@@ -39,15 +39,14 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Create.Command {Recommendation = recommendation}));
         }
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(Guid id, Recommendation recommendation)
         {
             recommendation.Id = id;
 
-            await Mediator.Send(new Edit.Command { Recommendation = recommendation });
-
-            return Ok();
+            return HandleResult(await Mediator.Send(new Edit.Command { Recommendation = recommendation }));
+            
         }
 
         [HttpDelete("{id}")]
