@@ -30,7 +30,6 @@ namespace Application.Recommendations
 
                 if (recommendation == null) return null;
 
-
                 _context.Remove(recommendation);
 
                 var result = await _context.SaveChangesAsync() > 0;
