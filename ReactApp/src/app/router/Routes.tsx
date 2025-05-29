@@ -1,10 +1,11 @@
-import { createBrowserRouter, RouteObject } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
 import App from "../layout/App";
 import HomePage from "../../features/recommendations/home/HomePage";
 import RecommendationDashboard from "../../features/recommendations/dashboard/RecommendationDashboard";
 import RecommendationForm from "../../features/recommendations/form/RecommendationForm";
 import RecommendationDetails from "../../features/recommendations/details/RecommendationDetails";
 import TestErrors from "../../features/recommendations/errors/TestError";
+import NotFound from "../../features/recommendations/errors/NotFound";
 
 export const routes: RouteObject[] = [
    {
@@ -16,7 +17,9 @@ export const routes: RouteObject[] = [
             {path: 'recommendations/:id', element: <RecommendationDetails />},
             {path: 'createRecommendation', element: <RecommendationForm key='create'/>},
             {path: 'manage/:id', element: <RecommendationForm key='manage'/>},
-            {path: 'errors/', element: <TestErrors/>}
+            {path: 'errors/', element: <TestErrors/>},
+            {path: 'not-found/', element: <NotFound/>},
+            {path: '*', element: <Navigate replace to='/not-found' />}
         ]
    },
 ]
