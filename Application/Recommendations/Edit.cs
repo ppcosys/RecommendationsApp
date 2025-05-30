@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Core;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -16,6 +17,14 @@ namespace Application.Recommendations
         {
             public Recommendation Recommendation { get; set; }
         }
+        
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Recommendation).SetValidator(new RecommendationValidator());
+            }
+        }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
@@ -25,7 +34,7 @@ namespace Application.Recommendations
             {
                 _mapper = mapper;
                 _context = context;
-                
+
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)

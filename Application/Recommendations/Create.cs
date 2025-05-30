@@ -6,6 +6,7 @@ using Domain;
 using MediatR;
 using Persistence;
 using Application.Core;
+using FluentValidation;
 
 namespace Application.Recommendations
 {
@@ -13,7 +14,15 @@ namespace Application.Recommendations
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Recommendation Recommendation {get; set;}
+            public Recommendation Recommendation { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Recommendation).SetValidator(new RecommendationValidator());
+            }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
