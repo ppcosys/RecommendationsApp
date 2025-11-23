@@ -11,6 +11,7 @@ export default function NavBar() {
                     Recommendations
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/recommendations' name='Recommendations'/>
+                <Menu.Item as={NavLink} to='/about' name='About'/>
                 <Menu.Item as={NavLink} to='/errors' name='Errors'/>
                 <Menu.Item>
                     <Button as={NavLink} to='/createRecommendation' positive content='Create Recommendation'/>

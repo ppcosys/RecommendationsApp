@@ -6,6 +6,7 @@ import RecommendationForm from "../../features/recommendations/form/Recommendati
 import RecommendationDetails from "../../features/recommendations/details/RecommendationDetails";
 import TestErrors from "../../features/recommendations/errors/TestError";
 import NotFound from "../../features/recommendations/errors/NotFound";
+import AboutPage from "../../features/recommendations/about/AboutPage";
 
 export const routes: RouteObject[] = [
    {
@@ -17,6 +18,7 @@ export const routes: RouteObject[] = [
             {path: 'recommendations/:id', element: <RecommendationDetails />},
             {path: 'createRecommendation', element: <RecommendationForm key='create'/>},
             {path: 'manage/:id', element: <RecommendationForm key='manage'/>},
+            {path: 'about', element: <AboutPage />},
             {path: 'errors/', element: <TestErrors/>},
             {path: 'not-found/', element: <NotFound/>},
             {path: '*', element: <Navigate replace to='/not-found' />}
