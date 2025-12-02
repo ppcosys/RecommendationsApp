@@ -1,61 +1,91 @@
-import { observer } from 'mobx-react-lite'
-import React from 'react'
-import {Segment, Header, Comment, Form, Button} from 'semantic-ui-react'
+import { observer } from 'mobx-react-lite';
+import {
+  Box,
+  Paper,
+  Typography,
+  Avatar,
+  TextField,
+  Button,
+  Stack,
+  Divider
+} from '@mui/material';
 
 export default observer(function RecommendationDetailedChat() {
-    return (
-        <>
-            <Segment
-                textAlign='center'
-                attached='top'
-                inverted
-                color='teal'
-                style={{border: 'none'}}
+  return (
+    <>
+      <Paper
+        elevation={3}
+        sx={{
+          textAlign: 'center',
+          p: 2,
+          backgroundColor: 'teal',
+          color: 'white',
+          borderRadius: '6px 6px 0 0',
+        }}
+      >
+        <Typography variant="h6">Chat about this Recommendation</Typography>
+      </Paper>
+
+      <Paper sx={{ p: 3, borderRadius: '0 0 6px 6px' }}>
+        <Stack spacing={4}>
+          {/* Comment 1 */}
+          <Box display="flex" gap={2}>
+            <Avatar src="/assets/user.png" />
+            <Box>
+              <Typography variant="subtitle1" fontWeight="bold">
+                John
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                Today at 5:42PM
+              </Typography>
+              <Typography variant="body1" mt={1}>
+                Great event!
+              </Typography>
+              <Button size="small" sx={{ mt: 1 }}>Reply</Button>
+            </Box>
+          </Box>
+
+          <Divider />
+
+          {/* Comment 2 */}
+          <Box display="flex" gap={2}>
+            <Avatar src="/assets/user.png" />
+            <Box>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Joe
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                5 days ago
+              </Typography>
+              <Typography variant="body1" mt={1}>
+                Awesome!
+              </Typography>
+              <Button size="small" sx={{ mt: 1 }}>Reply</Button>
+            </Box>
+          </Box>
+
+          <Divider />
+
+          {/* Form */}
+          <Box>
+            <TextField
+              multiline
+              fullWidth
+              minRows={3}
+              variant="outlined"
+              placeholder="Write a reply..."
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+              startIcon={<span className="material-icons">edit</span>}
             >
-                <Header>Chat about this Recommendation</Header>
-            </Segment>
-            <Segment attached>
-                <Comment.Group>
-                    <Comment>
-                        <Comment.Avatar src='/assets/user.png'/>
-                        <Comment.Content>
-                            <Comment.Author as='a'>John</Comment.Author>
-                            <Comment.Metadata>
-                                <div>Today at 5:42PM</div>
-                            </Comment.Metadata>
-                            <Comment.Text>Great event!</Comment.Text>
-                            <Comment.Actions>
-                                <Comment.Action>Reply</Comment.Action>
-                            </Comment.Actions>
-                        </Comment.Content>
-                    </Comment>
-
-                    <Comment>
-                        <Comment.Avatar src='/assets/user.png'/>
-                        <Comment.Content>
-                            <Comment.Author as='a'>Joe</Comment.Author>
-                            <Comment.Metadata>
-                                <div>5 days ago</div>
-                            </Comment.Metadata>
-                            <Comment.Text>Awesome!</Comment.Text>
-                            <Comment.Actions>
-                                <Comment.Action>Reply</Comment.Action>
-                            </Comment.Actions>
-                        </Comment.Content>
-                    </Comment>
-
-                    <Form reply>
-                        <Form.TextArea/>
-                        <Button
-                            content='Add Reply'
-                            labelPosition='left'
-                            icon='edit'
-                            primary
-                        />
-                    </Form>
-                </Comment.Group>
-            </Segment>
-        </>
-
-    )
-})
+              Add Reply
+            </Button>
+          </Box>
+        </Stack>
+      </Paper>
+    </>
+  );
+});

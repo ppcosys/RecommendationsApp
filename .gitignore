@@ -484,3 +484,12 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Documentation folder (local development notes)
+docs/
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+API/Recommendations.db*

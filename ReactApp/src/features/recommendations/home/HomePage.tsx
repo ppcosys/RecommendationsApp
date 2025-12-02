@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Link } from 'react-router-dom';
+import { Container, Typography, Box } from '@mui/material';
 
 export default function HomePage() {
-    return (
-        <Container style={{marginTop: '7em'}}>
-            <h1>Home page</h1>
-            <h3>Go to <Link to='/recommendations'>Recommendations</Link></h3>
-        </Container>
-    )
+  return (
+    <Container maxWidth="md">
+      <Box sx={{ mt: 10 }}>
+        <Typography variant="h3" gutterBottom>
+          Home Page
+        </Typography>
+        <Typography variant="h5">
+          Go to <Link to="/recommendations">Recommendations</Link>
+        </Typography>
+      </Box>
+    </Container>
+  );
 }
