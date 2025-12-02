@@ -1,19 +1,42 @@
 import React from 'react';
 import Calendar from 'react-calendar';
-import { Header, Menu } from 'semantic-ui-react';
+import {
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Divider,
+} from '@mui/material';
 
-export default function RecommendationFilters(){
-    return(
-        <>
-            <Menu vertical size='large' style={{width: '100%', marginTop: 25}}>
-                <Header icon='filter' attached color='teal' content='Filters' />
-                <Menu.Item content='All Recommendations' />
-                <Menu.Item content='I voted' />
-                <Menu.Item content='I recommend it' />
-            </Menu>
-            <Header />
-            <Calendar />
-        </>
-
-    )
+export default function RecommendationFilters() {
+  return (
+    <>
+      <Paper sx={{ width: '100%', mt: 3, p: 2 }} elevation={3}>
+        <Typography variant="h6" color="primary" gutterBottom>
+          Filters
+        </Typography>
+        <Divider sx={{ mb: 1 }} />
+        <List component="nav">
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary="All Recommendations" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary="I voted" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary="I recommend it" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Paper>
+      <Calendar style={{ width: '100%', marginTop: '1rem' }} />
+    </>
+  );
 }

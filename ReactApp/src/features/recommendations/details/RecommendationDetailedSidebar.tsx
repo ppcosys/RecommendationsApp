@@ -1,61 +1,89 @@
-import React from 'react'
-import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import { observer } from 'mobx-react-lite'
+import React from 'react';
+import { observer } from 'mobx-react-lite';
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Paper,
+  Chip
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 
-export default observer(function RecommendationDetailedSidebar () {
-    return (
-        <>
-            <Segment
-                textAlign='center'
-                style={{ border: 'none' }}
-                attached='top'
-                secondary
-                inverted
-                color='teal'
-            >
-                3 People Vote
-            </Segment>
-            <Segment attached>
-                <List relaxed divided>
-                    <Item style={{ position: 'relative' }}>
-                        <Label
-                            style={{ position: 'absolute' }}
-                            color='orange'
-                            ribbon='right'
-                        >
-                            Host
-                        </Label>
-                        <Image size='tiny' src={'/assets/user.png'} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header as='h3'>
-                                <Link to={`#`}>John</Link>
-                            </Item.Header>
-                            <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
-                        </Item.Content>
-                    </Item>
+export default observer(function RecommendationDetailedSidebar() {
+  return (
+    <>
+      <Paper
+        sx={{
+          textAlign: 'center',
+          bgcolor: 'teal',
+          color: 'white',
+          p: 1,
+          borderRadius: 1,
+          mb: 1
+        }}
+        elevation={3}
+      >
+        <Typography variant="subtitle1">3 People Vote</Typography>
+      </Paper>
 
-                    <Item style={{ position: 'relative' }}>
-                        <Image size='tiny' src={'/assets/user.png'} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header as='h3'>
-                                <Link to={`#`}>Tom</Link>
-                            </Item.Header>
-                            <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
-                        </Item.Content>
-                    </Item>
+      <Paper sx={{ p: 2 }} elevation={1}>
+        <List>
+          <ListItem alignItems="flex-start" sx={{ position: 'relative' }}>
+            <Chip
+              label="Host"
+              color="warning"
+              size="small"
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8
+              }}
+            />
+            <ListItemAvatar>
+              <Avatar alt="John" src="/assets/user.png" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Link to="#">
+                  <Typography variant="h6" component="div">John</Typography>
+                </Link>
+              }
+              secondary="Following"
+            />
+          </ListItem>
 
-                    <Item style={{ position: 'relative' }}>
-                        <Image size='tiny' src={'/assets/user.png'} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header as='h3'>
-                                <Link to={`#`}>Sally</Link>
-                            </Item.Header>
-                        </Item.Content>
-                    </Item>
-                </List>
-            </Segment>
-        </>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="Tom" src="/assets/user.png" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Link to="#">
+                  <Typography variant="h6" component="div">Tom</Typography>
+                </Link>
+              }
+              secondary="Following"
+            />
+          </ListItem>
 
-    )
-})
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="Sally" src="/assets/user.png" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Link to="#">
+                  <Typography variant="h6" component="div">Sally</Typography>
+                </Link>
+              }
+            />
+          </ListItem>
+        </List>
+      </Paper>
+    </>
+  );
+});
