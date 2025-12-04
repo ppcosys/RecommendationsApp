@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import {
   Box,
   Paper,
@@ -19,33 +18,33 @@ export default observer(function RecommendationDetailedInfo({ recommendation }: 
   return (
     <Box>
       <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
+        <Grid container gap={2} alignItems="center">
+          <Grid>
             <InfoIcon color="primary" />
           </Grid>
-          <Grid item xs>
+          <Grid size="auto">
             <Typography>{recommendation.description}</Typography>
           </Grid>
         </Grid>
       </Paper>
 
       <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
+        <Grid container gap={2} alignItems="center">
+          <Grid>
             <EventIcon color="primary" />
           </Grid>
-          <Grid item xs>
+          <Grid size="auto">
             <Typography>{recommendation.date}</Typography>
           </Grid>
         </Grid>
       </Paper>
 
       <Paper elevation={2} sx={{ p: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
+        <Grid container gap={2} alignItems="center">
+          <Grid>
             <PlaceIcon color="primary" />
           </Grid>
-          <Grid item xs>
+          <Grid size="auto">
             <Typography>{recommendation.place}, {recommendation.city}</Typography>
           </Grid>
         </Grid>

@@ -1,9 +1,9 @@
-import Container from '@mui/material/Container';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import { Outlet, useLocation } from 'react-router-dom';
 import HomePage from '../../features/recommendations/home/HomePage';
 import { ToastContainer } from 'react-toastify';
+import Container from '@mui/material/Container';
 
 function App() {
   const location = useLocation();
@@ -14,9 +14,13 @@ function App() {
         <HomePage />
       ) : (
         <>
-          <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+          <ToastContainer
+            position="bottom-right"
+            hideProgressBar
+            theme="colored"
+          />
           <NavBar />
-          <Container sx={{ mt: 10 }}>
+          <Container maxWidth="lg" sx={{ mt: 10 }}>
             <Outlet />
           </Container>
         </>
@@ -26,4 +30,3 @@ function App() {
 }
 
 export default observer(App);
-
