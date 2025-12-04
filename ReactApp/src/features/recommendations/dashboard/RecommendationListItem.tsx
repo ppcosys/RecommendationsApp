@@ -28,11 +28,11 @@ export default observer(function RecommendationListItem({ recommendation }: Prop
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
       <CardContent>
-        <Grid container spacing={2}>
-          <Grid item>
+        <Grid container gap={2}>
+          <Grid>
             <Avatar src="/assets/user.png" alt="User" sx={{ width: 56, height: 56 }} />
           </Grid>
-          <Grid item xs>
+          <Grid size="auto">
             <Typography variant="h6" component={Link} to={`/recommendations/${recommendation.id}`} sx={{ textDecoration: 'none' }}>
               {recommendation.title}
             </Typography>

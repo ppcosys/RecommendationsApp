@@ -1,4 +1,3 @@
-import React from 'react';
 import Calendar from 'react-calendar';
 import {
   Paper,
@@ -8,12 +7,13 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
+  Box,
 } from '@mui/material';
 
 export default function RecommendationFilters() {
   return (
-    <>
-      <Paper sx={{ width: '100%', mt: 3, p: 2 }} elevation={3}>
+    <Box display="flex" flexDirection="column" gap={2}>
+      <Paper sx={{ p: 2 }} elevation={3}>
         <Typography variant="h6" color="primary" gutterBottom>
           Filters
         </Typography>
@@ -36,7 +36,9 @@ export default function RecommendationFilters() {
           </ListItem>
         </List>
       </Paper>
-      <Calendar style={{ width: '100%', marginTop: '1rem' }} />
-    </>
+      <Paper sx={{ p: 2 }} elevation={3}>
+        <Calendar />
+      </Paper>
+    </Box>
   );
 }
