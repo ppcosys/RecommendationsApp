@@ -3,7 +3,8 @@ Recommendation App is an application in which registered users will be able to s
 Users could gain a reputation as worth recommending sources through the number of likes for a given source and share their links.
 
 Technologies used:
-- React 18
+- React 19
+- Material UI
 - TypeScript
 - ASP.NET API
 - .NET 8.0
