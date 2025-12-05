@@ -1,7 +1,5 @@
-import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Recommendation } from '../../../app/models/recommendation';
-import { useStore } from '../../../app/stores/store';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -22,9 +20,6 @@ interface Props {
 }
 
 export default observer(function RecommendationListItem({ recommendation }: Props) {
-  const { recommendationStore } = useStore();
-  const { deleteRecommendation, loading } = recommendationStore;
-
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
       <CardContent>
