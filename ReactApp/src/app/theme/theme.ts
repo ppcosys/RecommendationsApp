@@ -1,22 +1,24 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from '@mui/material/styles';
 
-export const theme = createTheme({
+export const createAppTheme = (mode: 'light' | 'dark') =>
+  createTheme({
     palette: {
-        mode: 'light', // lub 'dark'
-        primary: {
-            main: '#1976d2',
-        },
-        secondary: {
-            main: '#9c27b0',
-        },
-        background: {
-            default: '#f5f5f5',
-        },
+      mode,
+      primary: {
+        main: '#1976d2',
+      },
+      secondary: {
+        main: '#9c27b0',
+      },
+      background: {
+        default: mode === 'light' ? '#f5f5f5' : '#121212',
+        paper: mode === 'light' ? '#fff' : '#1e1e1e',
+      },
     },
     typography: {
-        fontFamily: 'Roboto, Arial, sans-serif',
+      fontFamily: 'Roboto, Arial, sans-serif',
     },
     shape: {
-        borderRadius: 12,
+      borderRadius: 12,
     },
-});
+  });
