@@ -1,6 +1,7 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {createContext, useContext, useState, useMemo} from 'react';
 import { createAppTheme} from './theme'
+import GlobalStyles from './GlobalStyles';
 
 interface ColorModeContextProps{
     toggleColorMode: () => void;
@@ -28,6 +29,7 @@ export const ColorModeProvider = ({children }: { children: React.ReactNode}) => 
         <ColorModeContext.Provider value ={{ toggleColorMode, mode}}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
+                <GlobalStyles />
                 {children}
             </ThemeProvider>
         </ColorModeContext.Provider>

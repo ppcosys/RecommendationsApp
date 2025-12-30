@@ -18,7 +18,7 @@ export default observer(function RecommendationDashboard() {
     return <LoadingComponent content="Loading app" />;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 2, bgcolor: "blue" }}>
+    <Container maxWidth="lg" sx={{ mt: 2 }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md:8 }}>
           <RecommendationList />
