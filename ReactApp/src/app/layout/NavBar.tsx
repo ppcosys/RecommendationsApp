@@ -6,10 +6,9 @@ import {
   Button,
   Box,
   Container as MUIContainer,
-  IconButton
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
+import ToggleColorModeButton from './ToggleColorModeButton';
 
 const linkStyle = {
   color: 'inherit',
@@ -22,6 +21,7 @@ export default function NavBar() {
     <AppBar position="fixed" sx={{ bgcolor: 'teal' }}>
       <MUIContainer maxWidth="lg">
         <Toolbar disableGutters>
+          {/* LOGO + NAZWA */}
           <Box
             component={NavLink}
             to="/"
@@ -43,7 +43,7 @@ export default function NavBar() {
             </Typography>
           </Box>
 
-          <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button color="inherit" component={NavLink} to="/recommendations" sx={linkStyle}>
               Recommendations
             </Button>
@@ -62,6 +62,10 @@ export default function NavBar() {
             >
               Create Recommendation
             </Button>
+            
+            <Box sx={{ ml: 2 }}>
+              <ToggleColorModeButton />
+            </Box>
           </Box>
         </Toolbar>
       </MUIContainer>
