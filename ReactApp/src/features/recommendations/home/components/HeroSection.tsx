@@ -1,5 +1,6 @@
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { APP_NAME } from '@/app/config/appConfig';
 
 export default function HeroSection() {
   return (
@@ -36,7 +37,7 @@ export default function HeroSection() {
           mb: 4,
         }}
       >
-        Recommendations is a smart place recommendation platform powered by community
+        {APP_NAME} is a smart place recommendation platform powered by community
         insights. Rate, add, and discover places tailored to your needs.
       </Typography>
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AppBar,
   Toolbar,
@@ -9,6 +8,7 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import ToggleColorModeButton from './ToggleColorModeButton';
+import { APP_NAME } from '@/app/config/appConfig';
 
 const linkStyle = {
   color: 'inherit',
@@ -39,7 +39,7 @@ export default function NavBar() {
               style={{ marginRight: '10px', height: '30px' }}
             />
             <Typography variant="h6" noWrap>
-              Recommendations
+              {APP_NAME}
             </Typography>
           </Box>
 
