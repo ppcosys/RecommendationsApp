@@ -1,13 +1,12 @@
-import { Box, Container} from '@mui/material'
-import HeroSection from './components/HeroSection'
-
+import { Box } from '@mui/material';
+import HeroSection from './components/HeroSection';
+import CategoriesSection from './components/CategoriesSection';
 
 export default function HomePage() {
   return (
-    <Box component="main" sx={{ py: { xs: 6, md: 8 } }}>
-      <Container maxWidth="lg">
-        <HeroSection />
-      </Container>
+    <Box component="main">
+      <HeroSection />
+      <CategoriesSection />
     </Box>
   );
 }
