@@ -18,7 +18,7 @@ const linkStyle = {
 
 export default function NavBar() {
   return (
-    <AppBar position="fixed" sx={{ bgcolor: 'teal' }}>
+    <AppBar position="fixed" sx={{ bgcolor: 'grey' }}>
       <MUIContainer maxWidth="lg">
         <Toolbar disableGutters>
           {/* LOGO + NAZWA */}
