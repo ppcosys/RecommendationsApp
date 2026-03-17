@@ -1,20 +1,22 @@
 import NavBar from "./NavBar";
 import { observer } from "mobx-react-lite";
 import { Outlet, useLocation } from "react-router-dom";
-import HomePage from "../../features/recommendations/home/HomePage";
 import { ToastContainer } from "react-toastify";
 import { Box, CssBaseline } from "@mui/material";
 
 function App() {
   const location = useLocation();
 
+  const isPublicPage =
+    location.pathname === "/" || location.pathname === "/discover";
+
   return (
     <>
       <CssBaseline />
       <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
 
-      {location.pathname === "/" ? (
-        <HomePage />
+      {isPublicPage ? (
+        <Outlet />
       ) : (
         <>
           <NavBar />
