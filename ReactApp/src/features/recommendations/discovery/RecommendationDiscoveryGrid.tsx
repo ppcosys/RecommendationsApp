@@ -1,7 +1,33 @@
 import { Box } from "@mui/material";
+import { Recommendation } from "../../../app/models/recommendation";
 import RecommendationDiscoveryCard from "./RecommendationDiscoveryCard";
 
-export default function RecommendationDiscoveryGrid() {
+interface Props {
+  items: Recommendation[];
+}
+
+function getCategoryImage(category: string) {
+  const normalized = category.toLowerCase();
+
+  switch (normalized) {
+    case "food":
+      return "/assets/categoryImages/food.jpg";
+    case "music":
+      return "/assets/categoryImages/music.jpg";
+    case "travel":
+      return "/assets/categoryImages/travel.jpg";
+    case "film":
+      return "/assets/categoryImages/film.jpg";
+    case "culture":
+      return "/assets/categoryImages/culture.jpg";
+    case "drinks":
+      return "/assets/categoryImages/drinks.jpg";
+    default:
+      return "/assets/placeholder.png";
+  }
+}
+
+export default function RecommendationDiscoveryGrid({ items }: Props) {
   return (
     <Box
       sx={{
@@ -13,41 +39,19 @@ export default function RecommendationDiscoveryGrid() {
         },
       }}
     >
-      <RecommendationDiscoveryCard
-        id="1"
-        title="Best sushi in Warsaw"
-        description="Amazing sushi restaurant in Mokotów."
-        category="Place"
-        rating={4.7}
-        imageUrl="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80"
-      />
-
-      <RecommendationDiscoveryCard
-        id="2"
-        title="Weekend jazz concert"
-        description="Live jazz event in the city center."
-        category="Event"
-        rating={4.5}
-        imageUrl="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80"
-      />
-
-      <RecommendationDiscoveryCard
-        id="3"
-        title="Noise cancelling headphones"
-        description="Great for working and travel."
-        category="Product"
-        rating={4.8}
-        imageUrl="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
-      />
-
-      <RecommendationDiscoveryCard
-        id="4"
-        title="Italian restaurant"
-        description="Authentic pasta and pizza."
-        category="Place"
-        rating={4.6}
-        imageUrl="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
-      />
+      {items.map((recommendation) => (
+        <RecommendationDiscoveryCard
+          key={recommendation.id}
+          id={recommendation.id}
+          title={recommendation.title}
+          description={recommendation.description}
+          category={recommendation.category}
+          city={recommendation.city}
+          place={recommendation.place}
+          date={recommendation.date}
+          imageUrl={getCategoryImage(recommendation.category)}
+        />
+      ))}
     </Box>
   );
 }
