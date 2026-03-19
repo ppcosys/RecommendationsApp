@@ -63,7 +63,7 @@ export default function HeroSection() {
 
             <Button
               component={Link}
-              to="/recommendations"
+              to="/discover"
               variant="contained"
               size="large"
               sx={{
