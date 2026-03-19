@@ -1,15 +1,11 @@
-import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
+import { useEffect } from 'react';
+import { Box, Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { useStore } from '../../../app/stores/store';
 import LoadingComponent from '../../../app/layout/LoadingComponents';
 import RecommendationDetailedHeader from './RecommendationDetailedHeader';
 import RecommendationDetailedInfo from './RecommendationDetailedInfo';
-import RecommendationDetailedChat from './RecommendationDetailedChat';
-import RecommendationDetailedSidebar from './RecommendationDetailedSidebar';
-
-// ⬇️ MUI Components
-import { Grid, Container } from '@mui/material';
 
 export default observer(function RecommendationDetails() {
   const { recommendationStore } = useStore();
@@ -18,27 +14,23 @@ export default observer(function RecommendationDetails() {
     loadRecommendation,
     loadingInitial,
   } = recommendationStore;
+
   const { id } = useParams();
 
   useEffect(() => {
     if (id) loadRecommendation(id);
   }, [id, loadRecommendation]);
 
-  if (loadingInitial || !recommendation)
+  if (loadingInitial || !recommendation) {
     return <LoadingComponent content="Loading recommendation..." />;
+  }
 
   return (
-    <Container maxWidth="lg">
-      <Grid container gap={3} sx={{ mt: 2 }}>
-        <Grid size={{ xs: 12, md: 8 }}>
-          <RecommendationDetailedHeader recommendation={recommendation} />
-          <RecommendationDetailedInfo recommendation={recommendation} />
-          <RecommendationDetailedChat />
-        </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <RecommendationDetailedSidebar />
-        </Grid>
-      </Grid>
-    </Container>
+    <Box sx={{ py: 4 }}>
+      <Container maxWidth="md">
+        <RecommendationDetailedHeader recommendation={recommendation} />
+        <RecommendationDetailedInfo recommendation={recommendation} />
+      </Container>
+    </Box>
   );
 });
