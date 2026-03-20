@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Recommendation } from '../models/recommendation';
 import { toast } from 'react-toastify';
 import { router } from '../router/Routes';
+import { API_URL } from '../config/appConfig';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -9,7 +10,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = API_URL;
 
 
 axios.interceptors.response.use(
