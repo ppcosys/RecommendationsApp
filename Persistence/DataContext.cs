@@ -10,5 +10,7 @@ namespace Persistence
         }
 
         public DbSet<Recommendation> Recommendations { get; set; }
+
+        public DbSet<AppUser> Users { get; set; }
     }
 }
