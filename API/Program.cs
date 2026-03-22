@@ -19,6 +19,9 @@ builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
