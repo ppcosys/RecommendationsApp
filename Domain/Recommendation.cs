@@ -8,9 +8,12 @@ namespace Domain
         public string Category { get; set; }
         public string Link { get; set; }
         public DateTime Date { get; set; }
-        public string Description { get; set; }        
+        public string Description { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         public string Place { get; set; }
+
+        public Guid AppUserId { get; set; }
+        public AppUser AppUser { get; set; } = null!;
     }
 }
