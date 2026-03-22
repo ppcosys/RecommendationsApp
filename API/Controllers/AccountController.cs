@@ -1,6 +1,7 @@
 using Application.Features.Auth.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.Auth.Login;
 
 namespace API.Controllers;
 
@@ -20,5 +21,15 @@ public class AccountController : ControllerBase
     {
         await _mediator.Send(new RegisterUserCommand(dto));
         return Ok();
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginUserDto dto)
+    {
+        var result = await _mediator.Send(new LoginUserQuery(dto));
+
+        if (result == null) return Unauthorized();
+
+        return Ok(result);
     }
 }
