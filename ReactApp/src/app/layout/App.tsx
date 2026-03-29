@@ -11,6 +11,7 @@ function App() {
   const location = useLocation();
   const { userStore } = useStore();
 
+
   useEffect(() => {
     const token = authStorage.getToken();
 
@@ -22,6 +23,7 @@ function App() {
   if (userStore.loadingInitial) {
     return <div>Loading...</div>;
   }
+
 
   const isPublicPage =
     location.pathname === "/" || location.pathname === "/discover";
