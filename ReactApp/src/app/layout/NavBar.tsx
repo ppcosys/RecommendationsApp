@@ -6,9 +6,11 @@ import {
   Box,
   Container as MUIContainer,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import ToggleColorModeButton from './ToggleColorModeButton';
 import { APP_NAME } from '@/app/config/appConfig';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '@/app/stores/store';
 
 const navButtonSx = {
   marginRight: '1rem',
@@ -27,7 +29,15 @@ const navButtonSx = {
   },
 };
 
-export default function NavBar() {
+function NavBar() {
+  const { userStore } = useStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    userStore.logout();
+    navigate('/');
+  };
+
   return (
     <AppBar position="fixed" sx={{ bgcolor: 'grey' }}>
       <MUIContainer maxWidth="lg">
@@ -83,9 +93,37 @@ export default function NavBar() {
             <Box sx={{ ml: 2 }}>
               <ToggleColorModeButton />
             </Box>
+
+            {/* AUTH SECTION */}
+            {userStore.isLoggedIn ? (
+              <>
+                <Typography sx={{ ml: 2 }}>
+                  Hello, {userStore.user?.displayName}
+                </Typography>
+
+                <Button
+                  onClick={handleLogout}
+                  sx={{ ml: 2 }}
+                  color="inherit"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button
+                component={NavLink}
+                to="/login"
+                sx={{ ml: 2 }}
+                color="inherit"
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </MUIContainer>
     </AppBar>
   );
 }
+
+export default observer(NavBar);
