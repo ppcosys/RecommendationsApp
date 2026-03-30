@@ -45,10 +45,7 @@ export default class UserStore {
     register = async (values: RegisterFormValues) => {
         this.loading = true;
         try {
-            const user = await agent.Account.register(values);
-            runInAction(() => {
-                this.setUser(user);
-            });
+            await agent.Account.register(values);
         } finally {
             runInAction(() => {
                 this.loading = false;
