@@ -17,6 +17,8 @@ function App() {
 
     if (token) {
       userStore.getUser();
+    } else {
+      userStore.loadingInitial = false;
     }
   }, [userStore]);
 

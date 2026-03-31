@@ -8,7 +8,7 @@ import { authStorage } from '../common/util/authStorage';
 export default class UserStore {
     user: User | null = null;
     loading = false;
-    loadingInitial = false;
+    loadingInitial = true;
 
     constructor() {
         makeAutoObservable(this);
