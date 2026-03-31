@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import { useNavigate, useParams, Link } from "react-router-dom";
@@ -18,7 +18,6 @@ import {
 export default observer(function RecommendationForm() {
   const { recommendationStore } = useStore();
   const {
-    selectedRecommendation,
     createRecommendation,
     updateRecommendation,
     loading,
@@ -49,16 +48,20 @@ export default observer(function RecommendationForm() {
     }
   }, [id, loadRecommendation]);
 
-  function handleSubmit() {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (!recommendation.id) {
-      recommendation.id = uuid();
-      createRecommendation(recommendation).then(() =>
-        navigate(`/recommendations/${recommendation.id}`)
-      );
+      const newRecommendation = {
+        ...recommendation,
+        id: uuid(),
+      };
+
+      await createRecommendation(newRecommendation);
+      navigate(`/recommendations/${newRecommendation.id}`);
     } else {
-      updateRecommendation(recommendation).then(() =>
-        navigate(`/recommendations/${recommendation.id}`)
-      );
+      await updateRecommendation(recommendation);
+      navigate(`/recommendations/${recommendation.id}`);
     }
   }
 
@@ -66,11 +69,15 @@ export default observer(function RecommendationForm() {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     const { name, value } = event.target;
-    setRecommendation({ ...recommendation, [name]: value });
+    setRecommendation((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
-  if (loadingInitial)
+  if (loadingInitial) {
     return <LoadingComponent content="Loading recommendation..." />;
+  }
 
   return (
     <Container maxWidth="sm" sx={{ mt: 10 }}>
@@ -78,6 +85,7 @@ export default observer(function RecommendationForm() {
         <Typography variant="h5" gutterBottom>
           {id ? "Edit Recommendation" : "Create Recommendation"}
         </Typography>
+
         <Box component="form" onSubmit={handleSubmit} autoComplete="off">
           <Stack spacing={2}>
             <TextField
@@ -87,6 +95,7 @@ export default observer(function RecommendationForm() {
               onChange={handleInputChange}
               fullWidth
             />
+
             <TextField
               label="Category"
               name="category"
@@ -94,6 +103,7 @@ export default observer(function RecommendationForm() {
               onChange={handleInputChange}
               fullWidth
             />
+
             <TextField
               label="Link"
               name="link"
@@ -101,6 +111,7 @@ export default observer(function RecommendationForm() {
               onChange={handleInputChange}
               fullWidth
             />
+
             <TextField
               label="Date"
               type="date"
@@ -110,6 +121,7 @@ export default observer(function RecommendationForm() {
               InputLabelProps={{ shrink: true }}
               fullWidth
             />
+
             <TextField
               label="Description"
               name="description"
@@ -119,6 +131,7 @@ export default observer(function RecommendationForm() {
               rows={3}
               fullWidth
             />
+
             <TextField
               label="Country"
               name="country"
@@ -126,6 +139,7 @@ export default observer(function RecommendationForm() {
               onChange={handleInputChange}
               fullWidth
             />
+
             <TextField
               label="City"
               name="city"
@@ -133,6 +147,7 @@ export default observer(function RecommendationForm() {
               onChange={handleInputChange}
               fullWidth
             />
+
             <TextField
               label="Place"
               name="place"
@@ -141,14 +156,16 @@ export default observer(function RecommendationForm() {
               fullWidth
             />
 
-            <Stack direction="row" spacing={2} justifyContent="flex-end" sx={{ mt: 2 }}>
-              <Button
-                variant="contained"
-                type="submit"
-                disabled={loading}
-              >
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="flex-end"
+              sx={{ mt: 2 }}
+            >
+              <Button variant="contained" type="submit" disabled={loading}>
                 Submit
               </Button>
+
               <Button
                 variant="outlined"
                 color="inherit"
