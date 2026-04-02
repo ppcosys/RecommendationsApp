@@ -7,18 +7,21 @@ import LoadingComponent from "../../../app/layout/LoadingComponents";
 
 function RecommendationDiscoveryPage() {
   const { recommendationStore } = useStore();
-  const { loadRecommendations, loadingInitial, recommendationsByDate } =
-    recommendationStore;
+  const {
+    loadDiscoverRecommendations,
+    loadingInitial,
+    discoverRecommendationsByDate,
+  } = recommendationStore;
 
   useEffect(() => {
-    loadRecommendations();
-  }, [loadRecommendations]);
+    loadDiscoverRecommendations();
+  }, [loadDiscoverRecommendations]);
 
   if (loadingInitial) {
     return <LoadingComponent content="Loading recommendations..." />;
   }
 
-  if (recommendationsByDate.length === 0) {
+  if (discoverRecommendationsByDate.length === 0) {
     return (
       <Box sx={{ py: 6 }}>
         <Container maxWidth="md" sx={{ textAlign: "center" }}>
@@ -41,7 +44,7 @@ function RecommendationDiscoveryPage() {
           Discover recommendations
         </Typography>
 
-        <RecommendationDiscoveryGrid items={recommendationsByDate} />
+        <RecommendationDiscoveryGrid items={discoverRecommendationsByDate} />
       </Container>
     </Box>
   );

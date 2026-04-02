@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Recommendations
@@ -15,9 +13,9 @@ namespace Application.Recommendations
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Recommendation Recommendation { get; set; }
+            public Recommendation Recommendation { get; set; } = null!;
         }
-        
+
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
@@ -30,24 +28,45 @@ namespace Application.Recommendations
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
-            {
-                _mapper = mapper;
-                _context = context;
+            private readonly IUserAccessor _userAccessor;
 
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+            {
+                _context = context;
+                _mapper = mapper;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var recommendation = await _context.Recommendations.FindAsync(request.Recommendation.Id);
+                var email = _userAccessor.GetUsername();
 
-                if (recommendation == null) return null;
+                if (string.IsNullOrWhiteSpace(email))
+                    return Result<Unit>.Failure("User email not found in token");
+
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+
+                if (user == null)
+                    return Result<Unit>.Failure("User not found");
+
+                var recommendation = await _context.Recommendations
+                    .FirstOrDefaultAsync(x => x.Id == request.Recommendation.Id, cancellationToken);
+
+                if (recommendation == null)
+                    return Result<Unit>.Failure("Recommendation not found");
+
+                if (recommendation.AppUserId != user.Id)
+                    return Result<Unit>.Failure("You are not allowed to edit this recommendation");
 
                 _mapper.Map(request.Recommendation, recommendation);
 
-                var result = await _context.SaveChangesAsync() > 0;
+                recommendation.AppUserId = user.Id;
 
-                if (!result) return Result<Unit>.Failure("Failed to update recommendation");
+                var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+
+                if (!result)
+                    return Result<Unit>.Failure("Failed to update recommendation");
 
                 return Result<Unit>.Success(Unit.Value);
             }

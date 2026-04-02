@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { Recommendation } from '../../../app/models/recommendation';
 import { Link } from 'react-router-dom';
+import { useStore } from '../../../app/stores/store';
 import {
   Card,
   CardContent,
@@ -20,6 +21,13 @@ interface Props {
 }
 
 export default observer(function RecommendationListItem({ recommendation }: Props) {
+  const { recommendationStore } = useStore();
+  const { deleteRecommendation, loading } = recommendationStore;
+
+  const handleDelete = async () => {
+    await deleteRecommendation(recommendation.id);
+  };
+
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
       <CardContent>
@@ -28,7 +36,12 @@ export default observer(function RecommendationListItem({ recommendation }: Prop
             <Avatar src="/assets/user.png" alt="User" sx={{ width: 56, height: 56 }} />
           </Grid>
           <Grid size="auto">
-            <Typography variant="h6" component={Link} to={`/recommendations/${recommendation.id}`} sx={{ textDecoration: 'none' }}>
+            <Typography
+              variant="h6"
+              component={Link}
+              to={`/recommendations/${recommendation.id}`}
+              sx={{ textDecoration: 'none' }}
+            >
               {recommendation.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -61,6 +74,23 @@ export default observer(function RecommendationListItem({ recommendation }: Prop
           color="primary"
         >
           View
+        </Button>
+
+        <Button
+          component={Link}
+          to={`/manage/${recommendation.id}`}
+          variant="outlined"
+        >
+          Edit
+        </Button>
+
+        <Button
+          onClick={handleDelete}
+          variant="outlined"
+          color="error"
+          disabled={loading}
+        >
+          Delete
         </Button>
       </CardActions>
     </Card>

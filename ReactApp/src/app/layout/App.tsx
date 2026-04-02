@@ -3,9 +3,29 @@ import { observer } from "mobx-react-lite";
 import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Box, CssBaseline } from "@mui/material";
+import { useEffect } from "react";
+import { useStore } from "../stores/store";
+import { authStorage } from "../common/util/authStorage";
 
 function App() {
   const location = useLocation();
+  const { userStore } = useStore();
+
+
+  useEffect(() => {
+    const token = authStorage.getToken();
+
+    if (token) {
+      userStore.getUser();
+    } else {
+      userStore.loadingInitial = false;
+    }
+  }, [userStore]);
+
+  if (userStore.loadingInitial) {
+    return <div>Loading...</div>;
+  }
+
 
   const isPublicPage =
     location.pathname === "/" || location.pathname === "/discover";

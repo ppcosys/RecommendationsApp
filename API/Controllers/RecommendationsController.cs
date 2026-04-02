@@ -8,9 +8,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
     public class RecommendationsController : BaseApiController
     {
         
@@ -20,6 +24,13 @@ namespace API.Controllers
         {
             _mediator = mediator;
             
+        }
+
+        [AllowAnonymous]
+        [HttpGet("discover")]
+        public async Task<IActionResult> DiscoverRecommendations()
+        {
+            return HandleResult(await _mediator.Send(new Discover.Query()));
         }
 
         [HttpGet] //api/recommendations

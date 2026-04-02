@@ -8,24 +8,36 @@ import TestErrors from "../../features/recommendations/errors/TestError";
 import NotFound from "../../features/recommendations/errors/NotFound";
 import AboutPage from "../../features/recommendations/about/AboutPage";
 import RecommendationDiscoveryPage from "../../features/recommendations/discovery/RecommendationDiscoveryPage";
+import LoginForm from "../../features/users/LoginForm";
+import RegisterForm from "../../features/users/RegisterForm";
+import RequireAuth from "./RequireAuth";
 
 export const routes: RouteObject[] = [
-   {
-        path: '/',
-        element: <App />,
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "", element: <HomePage /> },
+      { path: "discover", element: <RecommendationDiscoveryPage /> },
+      { path: "recommendations/:id", element: <RecommendationDetails /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "login", element: <LoginForm /> },
+      { path: "register", element: <RegisterForm /> },
+      { path: "errors/", element: <TestErrors /> },
+      { path: "not-found/", element: <NotFound /> },
+
+      {
+        element: <RequireAuth />,
         children: [
-            {path: '', element: <HomePage />},
-            {path: 'discover', element: <RecommendationDiscoveryPage />},
-            {path: 'recommendations', element: <RecommendationDashboard />},
-            {path: 'recommendations/:id', element: <RecommendationDetails />},
-            {path: 'createRecommendation', element: <RecommendationForm key='create'/>},
-            {path: 'manage/:id', element: <RecommendationForm key='manage'/>},
-            {path: 'about', element: <AboutPage />},
-            {path: 'errors/', element: <TestErrors/>},
-            {path: 'not-found/', element: <NotFound/>},
-            {path: '*', element: <Navigate replace to='/not-found' />}
-        ]
-   },
-]
+          { path: "recommendations", element: <RecommendationDashboard /> },
+          { path: "createRecommendation", element: <RecommendationForm key="create" /> },
+          { path: "manage/:id", element: <RecommendationForm key="manage" /> },
+        ],
+      },
+
+      { path: "*", element: <Navigate replace to="/not-found" /> },
+    ],
+  },
+];
 
 export const router = createBrowserRouter(routes);
