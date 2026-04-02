@@ -71,9 +71,8 @@ const Account = {
     login: (credentials: LoginFormValues) =>
         requests.post<User>('/account/login', credentials),
     register: (values: RegisterFormValues) =>
-        requests.post<User>('/account/register', {
+        requests.post<void>('/account/register', {
             displayName: values.displayName,
-            userName: values.userName,
             email: values.email,
             password: values.password,
         }),

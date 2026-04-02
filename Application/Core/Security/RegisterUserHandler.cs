@@ -1,6 +1,7 @@
 using Application.Core.Security;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Features.Auth.Register;
@@ -19,6 +20,12 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Unit>
     public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;
+
+        var emailExists = await _context.Users
+            .AnyAsync(x => x.Email == dto.Email, cancellationToken);
+
+        if (emailExists)
+            throw new Exception("Email is already taken");
 
         var (hash, salt) = _passwordHasher.CreateHash(dto.Password);
 

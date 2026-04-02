@@ -69,24 +69,12 @@ export default observer(function RegisterForm() {
             fullWidth
             required
           />
-
-          <TextField
-            label="Username"
-            value={values.userName}
-            onChange={(e) =>
-              setValues({ ...values, userName: e.target.value })
-            }
-            fullWidth
-            required
-          />
-
+          
           <TextField
             label="Email"
             type="email"
             value={values.email}
-            onChange={(e) =>
-              setValues({ ...values, email: e.target.value })
-            }
+            onChange={(e) => setValues({ ...values, email: e.target.value })}
             fullWidth
             required
           />
@@ -95,9 +83,7 @@ export default observer(function RegisterForm() {
             label="Password"
             type="password"
             value={values.password}
-            onChange={(e) =>
-              setValues({ ...values, password: e.target.value })
-            }
+            onChange={(e) => setValues({ ...values, password: e.target.value })}
             fullWidth
             required
           />
