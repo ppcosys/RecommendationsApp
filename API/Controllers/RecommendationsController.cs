@@ -26,6 +26,13 @@ namespace API.Controllers
             
         }
 
+        [AllowAnonymous]
+        [HttpGet("discover")]
+        public async Task<IActionResult> DiscoverRecommendations()
+        {
+            return HandleResult(await _mediator.Send(new Discover.Query()));
+        }
+
         [HttpGet] //api/recommendations
         public async Task<IActionResult> GetRecommendations()
         {

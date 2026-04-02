@@ -4,6 +4,7 @@ import agent from "../api/agent";
 
 export default class RecommendationStore {
     recommendationRegistry = new Map<string, Recommendation>();
+    discoverRecommendations: Recommendation[] = [];
     selectedRecommendation: Recommendation | undefined = undefined;
     editMode = false;
     loading = false;
@@ -19,14 +20,44 @@ export default class RecommendationStore {
         );
     }
 
+    get discoverRecommendationsByDate() {
+        return [...this.discoverRecommendations].sort(
+            (a, b) => Date.parse(a.date) - Date.parse(b.date)
+        );
+    }
+
     loadRecommendations = async () => {
         this.setLoadingInitial(true);
         try {
             const recommendations = await agent.Recommendations.list();
+
             runInAction(() => {
+                this.recommendationRegistry.clear();
+
                 recommendations.forEach((recommendation) => {
                     this.setRecommendation(recommendation);
                 });
+
+                this.setLoadingInitial(false);
+            });
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.setLoadingInitial(false);
+            });
+        }
+    };
+
+    loadDiscoverRecommendations = async () => {
+        this.setLoadingInitial(true);
+        try {
+            const recommendations = await agent.Recommendations.discover();
+
+            runInAction(() => {
+                this.discoverRecommendations = recommendations.map((recommendation) => ({
+                    ...recommendation,
+                    date: recommendation.date.split("T")[0],
+                }));
                 this.setLoadingInitial(false);
             });
         } catch (error) {

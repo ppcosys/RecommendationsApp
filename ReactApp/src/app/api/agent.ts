@@ -59,6 +59,7 @@ const requests = {
 
 const Recommendations = {
     list: () => requests.get<Recommendation[]>('/recommendations'),
+    discover: () => requests.get<Recommendation[]>('/recommendations/discover'),
     details: (id: string) => requests.get<Recommendation>(`/recommendations/${id}`),
     create: (recommendation: Recommendation) => requests.post<void>('/recommendations', recommendation),
     update: (recommendation: Recommendation) =>
