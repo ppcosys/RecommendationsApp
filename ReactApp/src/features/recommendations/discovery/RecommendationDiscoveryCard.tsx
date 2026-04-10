@@ -40,6 +40,7 @@ export default function RecommendationDiscoveryCard({
         "&:hover": {
           transform: "translateY(-2px)",
           boxShadow: 3,
+          textDecoration: "none",
         },
       }}
     >
